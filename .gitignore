@@ -1,0 +1,4 @@
+#가상환경과 패키지 ignore
+venv
+#npm 패키지 ignore
+frontend/node_modules
