@@ -2,3 +2,5 @@
 venv
 #npm 패키지 ignore
 frontend/node_modules
+#.idea ignore
+.idea
