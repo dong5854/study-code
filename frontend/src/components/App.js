@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import { render } from "react-dom";
 import HomePage from "./HomePage";
+import ResultPage from "./ResultPage";
+import AnalysisPage from "./AnalysisPage";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
 
 export default class App extends Component {
     constructor(props){
@@ -8,11 +11,13 @@ export default class App extends Component {
     }
 
     render(){
-        return (
-            <div>
-            <HomePage />
-            </div>
-        );
+        return (<Router>
+            <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route path='/result' component={ResultPage} />
+                <Route path='/analysis' component={AnalysisPage} />
+            </Switch>
+        </Router>);
     }
 }
 
