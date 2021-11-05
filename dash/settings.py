@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'dash',
     'frontend.apps.FrontendConfig',
     'rest_framework',
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
