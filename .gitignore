@@ -5,7 +5,7 @@ frontend/node_modules
 #.idea ignore
 .idea
 #builded react
-frontend//static/frontend/
+frontend/static/frontend
 #pycache
 **/__pycache__/
 api/__pycache__
