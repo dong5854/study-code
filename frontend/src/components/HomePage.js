@@ -15,7 +15,7 @@ const BlackTextTypography = withStyles({
 
 const SearchTextField = withStyles({
     root: {
-        width: 1000
+        width: 1000,
     }
     })(TextField);
 
@@ -37,7 +37,7 @@ function HomePage (){
                     </Box>
                         <form noValidate autoComplete="off">
                             <div style={{whiteSpace: "nowrap"}}>
-                                <SearchTextField id="outlined-basic" variant="outlined" label="검색 키워드" />
+                                <SearchTextField id="outlined-basic" variant="outlined" label="검색 키워드" InputProps={{style: { paddingRight: '40px' }}} />
                                 <Box clone marginTop={0.5} marginRight={5}>
                                     <SearchIconButton type="submit" aria-label="search">
                                         <SearchIcon />
