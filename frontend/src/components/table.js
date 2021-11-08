@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-
+// https://v4.mui.com/components/tables/
 const columns = [
 	{ field: "title", headerName: "링크타이틀", width: 200 },
 	{ field: "type", headerName: "웹페이지종류", width: 200 },
