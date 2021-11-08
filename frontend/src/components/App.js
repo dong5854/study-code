@@ -21,7 +21,7 @@ const options = {
 	fpsLimit: 60,
 	background: {
 		color: {
-			value: "#fff",
+			value: "#f7f8ef",
 		},
 	},
 	particles: {
@@ -143,7 +143,7 @@ const options = {
 				y: 100,
 			},
 			rate: {
-				delay: 0.05,
+				delay: 0.5,
 				number: 50,
 			},
 			size: {
@@ -155,12 +155,12 @@ const options = {
 					value: "#00ff00",
 				},
 				size: {
-					value: 5,
+					value: 50,
 				},
 				links: {
 					id: "green",
 					color: "#00ff00",
-					enable: true,
+					enable: false,
 				},
 				opacity: {
 					value: 0.5,
@@ -181,7 +181,7 @@ const options = {
 				y: 100,
 			},
 			rate: {
-				delay: 0.05,
+				delay: 0.5,
 				number: 50,
 			},
 			size: {
@@ -190,15 +190,15 @@ const options = {
 			},
 			particles: {
 				color: {
-					value: "#ffffff",
+					value: "#4d96fb",
 				},
 				size: {
-					value: 5,
+					value: 50,
 				},
 				links: {
-					enable: true,
-					id: "white",
-					color: "#ffffff",
+					enable: false,
+					id: "blue",
+					color: "#4d96fb",
 				},
 				opacity: {
 					value: 0.5,
@@ -219,7 +219,7 @@ const options = {
 				y: 100,
 			},
 			rate: {
-				delay: 0.05,
+				delay: 0.5,
 				number: 50,
 			},
 			size: {
@@ -231,10 +231,10 @@ const options = {
 					value: "#ff0000",
 				},
 				size: {
-					value: 5,
+					value: 50,
 				},
 				links: {
-					enable: true,
+					enable: false,
 					id: "red",
 					color: "#ff0000",
 				},
