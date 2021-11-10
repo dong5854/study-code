@@ -2,21 +2,18 @@ from django.db import models
 import string
 import random
 
-def generate_unique_code():
-    length = 6
+# def generate_unique_code():
+#     length = 6
 
-    while True:
-        code = ''.join(random.choices(string.ascii_letters, k = length))
-        if Result.objects.filter(id=id).count() == 0:
+#     while True:
+#         code = ''.join(random.choices(string.ascii_letters, k = length))
+#         if Result.objects.filter(id=id).count() == 0:
 
-            break
-    return code
+#             break
+#     return code
 
-# Create your models here.
 
 class Result(models.Model):
-    
-    host = models.CharField(max_length=50, unique=True)
     keyword = models.CharField(max_length=20)
     engine = models.CharField(max_length=20)
 
@@ -28,4 +25,3 @@ class Result(models.Model):
     URL = models.CharField(max_length=50)
     web_kind = models.CharField(max_length=20)
     pro_con = models.BooleanField(null=False, default = 1)
-
