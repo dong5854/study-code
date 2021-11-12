@@ -22,238 +22,101 @@ const loggedIn = false;
 
 const options = {
     fpsLimit: 60,
-    background: {
-        color: {
-            value: "#f7f8ef",
-        },
-    },
+    fullScreen: { enable: true },
     particles: {
         number: {
-            value: 0,
-            density: {
-                enable: false,
-                value_area: 800,
-            },
-        },
-        color: {
-            value: "#fff",
+            value: 50,
         },
         shape: {
             type: "circle",
-            stroke: {
-                width: 0,
-                color: "#fff",
-            },
-            polygon: {
-                nb_sides: 5,
-            },
-            image: {
-                src: "https://cdn.matteobruni.it/images/particles/github.svg",
-                width: 100,
-                height: 100,
-            },
         },
         opacity: {
             value: 0.5,
-            random: false,
-            anim: {
-                enable: false,
-                speed: 1,
-                opacity_min: 0.1,
-                sync: false,
-            },
         },
         size: {
-            value: 5,
-            random: true,
-            anim: {
-                enable: false,
-                speed: 40,
-                size_min: 0.1,
-                sync: false,
+            value: 400,
+            random: {
+                enable: true,
+                minimumValue: 200,
             },
-        },
-        line_linked: {
-            enable: true,
-            distance: 150,
-            color: "#fff",
-            opacity: 0.4,
-            width: 1,
         },
         move: {
             enable: true,
-            speed: 2,
+            speed: 10,
             direction: "top",
-            random: false,
-            straight: true,
-            out_mode: "out",
-            attract: {
-                enable: false,
-                rotateX: 600,
-                rotateY: 1200,
-            },
+            outMode: "destroy",
         },
     },
     interactivity: {
-        detect_on: "canvas",
+        detectsOn: "canvas",
         events: {
-            onhover: {
-                enable: false,
-                mode: "repulse",
-                parallax: {
-                    enable: false,
-                    force: 60,
-                    smooth: 10,
-                },
-            },
-            onclick: {
-                enable: false,
-                mode: "push",
-            },
             resize: true,
         },
-        modes: {
-            grab: {
-                distance: 400,
-                line_linked: {
-                    opacity: 1,
-                },
-            },
-            bubble: {
-                distance: 400,
-                size: 40,
-                duration: 2,
-                opacity: 0.8,
-                speed: 3,
-            },
-            repulse: {
-                distance: 200,
-            },
-            push: {
-                particles_nb: 4,
-            },
-            remove: {
-                particles_nb: 2,
-            },
-        },
     },
-    retina_detect: true,
-    emitters: [
+    detectRetina: true,
+    themes: [
         {
-            direction: "top",
-            position: {
-                x: 100 / 6,
-                y: 100,
+            name: "light",
+            default: {
+                value: true,
+                mode: "light",
             },
-            rate: {
-                delay: 0.5,
-                number: 50,
-            },
-            size: {
-                width: 100 / 3,
-                height: 100,
-            },
-            particles: {
-                color: {
-                    value: "#00ff00",
+            options: {
+                background: {
+                    color: "#f7f8ef",
                 },
-                size: {
-                    value: 50,
-                },
-                links: {
-                    id: "green",
-                    color: "#00ff00",
-                    enable: false,
-                },
-                opacity: {
-                    value: 0.5,
-                },
-                move: {
-                    speed: 2,
-                    angle: 30,
-                    random: true,
-                    straight: true,
-                    outMode: "destroy",
+                particles: {
+                    color: {
+                        value: [
+                            "#5bc0eb",
+                            "#fde74c",
+                            "#9bc53d",
+                            "#e55934",
+                            "#fa7921",
+                        ],
+                    },
                 },
             },
         },
         {
-            direction: "top",
-            position: {
-                x: 50,
-                y: 100,
+            name: "dark",
+            default: {
+                value: true,
+                mode: "dark",
             },
-            rate: {
-                delay: 0.5,
-                number: 50,
-            },
-            size: {
-                width: 100 / 3,
-                height: 100,
-            },
-            particles: {
-                color: {
-                    value: "#4d96fb",
+            options: {
+                background: {
+                    color: "#080710",
                 },
-                size: {
-                    value: 50,
-                },
-                links: {
-                    enable: false,
-                    id: "blue",
-                    color: "#4d96fb",
-                },
-                opacity: {
-                    value: 0.5,
-                },
-                move: {
-                    speed: 2,
-                    random: true,
-                    angle: 30,
-                    straight: true,
-                    outMode: "destroy",
-                },
-            },
-        },
-        {
-            direction: "top",
-            position: {
-                x: 500 / 6,
-                y: 100,
-            },
-            rate: {
-                delay: 0.5,
-                number: 50,
-            },
-            size: {
-                width: 100 / 3,
-                height: 100,
-            },
-            particles: {
-                color: {
-                    value: "#ff0000",
-                },
-                size: {
-                    value: 50,
-                },
-                links: {
-                    enable: false,
-                    id: "red",
-                    color: "#ff0000",
-                },
-                opacity: {
-                    value: 0.5,
-                },
-                move: {
-                    speed: 2,
-                    angle: 30,
-                    random: true,
-                    straight: true,
-                    outMode: "destroy",
+                particles: {
+                    color: {
+                        value: [
+                            "#004f74",
+                            "#5f5800",
+                            "#245100",
+                            "#7d0000",
+                            "#810c00",
+                        ],
+                    },
                 },
             },
         },
     ],
+    emitters: {
+        direction: "top",
+        position: {
+            x: 50,
+            y: 150,
+        },
+        rate: {
+            delay: 0.2,
+            quantity: 2,
+        },
+        size: {
+            width: 100,
+            height: 0,
+        },
+    },
 };
 
 const App = () => {
