@@ -16,8 +16,9 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/system";
 import DataTable from "./table";
+import { useState } from "react";
 
 const BlackTextTypography = withStyles({
     root: {
@@ -40,6 +41,8 @@ const SearchIconButton = withStyles({
 })(IconButton);
 
 function HomePage() {
+    const [keyword, setKeyword] = useState("");
+
     return (
         <Grid container spacing={1}>
             <Grid item xs={12} align="center">
@@ -48,13 +51,21 @@ function HomePage() {
                         대쉬
                     </BlackTextTypography>
                 </Box>
-                <form noValidate autoComplete="off">
+                <Box
+                    component="form"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+
+                        console.log(keyword);
+                    }}
+                >
                     <div style={{ whiteSpace: "nowrap" }}>
                         <SearchTextField
                             id="outlined-basic"
                             variant="outlined"
                             label="검색 키워드"
                             InputProps={{ style: { paddingRight: "40px" } }}
+                            onChange={(e) => setKeyword(e.target.value)}
                         />
                         <Box clone marginTop={0.5} marginRight={5}>
                             <SearchIconButton type="submit" aria-label="search">
@@ -62,7 +73,7 @@ function HomePage() {
                             </SearchIconButton>
                         </Box>
                     </div>
-                </form>
+                </Box>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={8} align="center">

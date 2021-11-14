@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import HomePage from "./HomePage";
 import ResultPage from "./ResultPage";
 import AnalysisPage from "./AnalysisPage";
-import SignUpPage from "./signup";
+import SignUpPage from "./signUpPage";
 import {
     BrowserRouter as Router,
     Switch,
@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import Particles from "react-tsparticles";
 import styled from "styled-components";
+import SignInPage from "./singInPage";
 
 const Back = styled.div`
     z-index: -999;
@@ -142,6 +143,7 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route path="/signup" component={SignUpPage} />
+                    <Route path="/signin" component={SignInPage} />
                     <Route path="/homepage" component={HomePage} />
                     <Route path="/result" component={ResultPage} />
                     <Route path="/analysis" component={AnalysisPage} />
@@ -149,7 +151,7 @@ const App = () => {
                         {loggedIn ? (
                             <Redirect to="/homepage" />
                         ) : (
-                            <Redirect to="/signup" />
+                            <Redirect to="/signin" />
                         )}
                     </Route>
                 </Switch>

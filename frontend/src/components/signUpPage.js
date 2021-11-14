@@ -137,8 +137,8 @@ function SignUpPage() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <RouterLink to="/homepage">
-                                    Already have an account? Sign in
+                                <RouterLink to="/signin">
+                                    Already have an account? Sign In
                                 </RouterLink>
                             </Grid>
                         </Grid>
