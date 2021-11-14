@@ -35,6 +35,7 @@ const SearchTextField = withStyles({
 
 const SearchIconButton = withStyles({
     root: {
+        paddingTop: "17px",
         position: "relative",
         right: "50px",
     },
@@ -67,11 +68,9 @@ function HomePage() {
                             InputProps={{ style: { paddingRight: "40px" } }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
-                        <Box clone marginTop={0.5} marginRight={5}>
-                            <SearchIconButton type="submit" aria-label="search">
-                                <SearchIcon />
-                            </SearchIconButton>
-                        </Box>
+                        <SearchIconButton type="submit" aria-label="search">
+                            <SearchIcon />
+                        </SearchIconButton>
                     </div>
                 </Box>
             </Grid>
