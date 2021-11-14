@@ -29,7 +29,8 @@ const BlackTextTypography = withStyles({
 
 const SearchTextField = withStyles({
     root: {
-        width: 1000,
+        width: "1000px",
+        marginLeft: "48px"
     },
 })(TextField);
 
