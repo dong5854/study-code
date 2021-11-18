@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import main, ResultView, ResultCreate, GetResult
+from .views import main, ResultView, ResultCreate, GetResult, FindResult
 
 urlpatterns = [
     path('', main),
     path('view', ResultView.as_view()),
     path('create', ResultCreate.as_view()),
     path('get-result', GetResult.as_view()),
+    path('find-result', FindResult.as_view()),
     #path('withhold', CreateResultView.as_view()),
 ]

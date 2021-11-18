@@ -46,6 +46,8 @@ function SignInPage() {
             email: data.get("email"),
             password: data.get("password"),
         });
+        //데이터베이스에서 값을 비교한 후 리디렉션할 예정
+        window.location.href = "/homepage";
     };
 
     return (

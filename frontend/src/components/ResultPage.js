@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import DataTable from "./table";
 
 function ResultPage() {
-	return <p>This is the Result page</p>;
+	return <DataTable></DataTable>;
 }
 
 export default ResultPage;

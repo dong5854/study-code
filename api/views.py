@@ -27,8 +27,8 @@ class GetResult(APIView):
     lookup_url_kwargs = 'keyword'
 
     def get(self, request, format=None):
-        keyword = request.GET.get('keyword')
         #keyword = request.GET.get(self.lookup_url_kwargs)
+        keyword = '아이폰'
         if keyword != None:
             result = Result.objects.filter(keyword=keyword)
             if len(result) > 0:
@@ -39,6 +39,23 @@ class GetResult(APIView):
             return Response({'Result Not Found'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+
+class FindResult(APIView):
+    serializer_class = ResultSerializer
+
+    def post(self, request, format=None):
+        keyword = request.data["keyword"]
+        
+        if keyword != None:
+            result = Result.objects.filter(keyword=keyword)
+            if len(result) > 0:
+                for i in range(len(result)):
+                    data = ResultSerializer(result[i]).data
+                return Response(data, status=status.HTTP_200_OK)
+
+            return Response({'Result Not Found'}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)    
         
 #class CreateResultView(APIView):
 #     serializer_class = CreateResultSerializer
