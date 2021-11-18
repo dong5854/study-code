@@ -123,6 +123,7 @@ function HomePage() {
                             id="outlined-basic"
                             variant="outlined"
                             label="검색 키워드"
+                            autoComplete="off"
                             InputProps={{ style: { paddingRight: "40px" } }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
