@@ -22,6 +22,7 @@ import AnalysisPage from "./AnalysisPage";
 import ProPage from "./ProPage";
 import ConPage from "./ConPage";
 import axios from 'axios';
+import { isPlainObject } from "@mui/utils";
 
 const BlackTextTypography = withStyles({
     root: {
@@ -72,14 +73,15 @@ function HomePage() {
         changeResult(status);
       }, [status]);
 
-      function clickPro(){
-        setStatus(statusList[2]);
-      }
-      function clickCon(){
-        setStatus(statusList[3]);
-      }
-      function clickAnalysis(){
-        setStatus(statusList[4]);
+      function clickBtnHandler(e){
+          let targetId = e.target.closest(".MuiButton-root").id;
+          if(targetId === "proBtn"){
+            setStatus(statusList[2]);
+          } else if(targetId === "conBtn"){
+            setStatus(statusList[3]);
+          } else if(targetId === "analysisBtn"){
+              setStatus(statusList[4]);
+          }
       }
 
     function requestUrl(keyword){
@@ -135,11 +137,11 @@ function HomePage() {
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={8}>
-            <Button variant="contained" onClick={clickPro}>긍정</Button>
+            <Button id="proBtn" variant="contained" onClick={clickBtnHandler}>긍정</Button>
             <span>&nbsp;&nbsp;&nbsp;</span>
-            <Button variant="contained" onClick={clickCon}>부정</Button>
+            <Button id="conBtn" variant="contained" onClick={clickBtnHandler}>부정</Button>
             <span>&nbsp;&nbsp;&nbsp;</span>
-            <Button variant="contained" onClick={clickAnalysis}>분석결과</Button>
+            <Button id="analysisBtn" variant="contained" onClick={clickBtnHandler}>분석결과</Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}></Grid>
