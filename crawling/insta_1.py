@@ -9,7 +9,7 @@ import getpass
 import urllib.request
 import matplotlib.pyplot as plt
 
-driver = webdriver.Chrome('/home/ubuntu/django-project/crawling/chromedriver.exe')
+driver = webdriver.Chrome(r"/home/ubuntu/django-project/chromedriver")
 
 loginUrl = f"https://www.instagram.com/accounts/login/"
 

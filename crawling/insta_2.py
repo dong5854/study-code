@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-driver = webdriver.Chrome('./chromedriver.exe')
+driver = webdriver.Chrome(r"/home/ubuntu/django-project/chromedriver")
 
 loginUrl = f"https://www.instagram.com/accounts/login/"
 

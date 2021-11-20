@@ -40,6 +40,7 @@ class GetResult(APIView):
 
         return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class FindResult(APIView):
     serializer_class = ResultSerializer
 
