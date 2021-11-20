@@ -58,10 +58,16 @@ function SignUpPage() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                        borderRadius: "30px",
+                        paddingTop: "30px",
+                        paddingLeft: "45px",
+                        paddingRight: "45px",
+                        paddingBottom: "30px",
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{ m: 1, bgcolor: "#ffdb76f2" }}>
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign up
@@ -113,17 +119,6 @@ function SignUpPage() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            value="allowExtraEmails"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
                             </Grid>
                         </Grid>

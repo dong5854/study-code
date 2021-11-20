@@ -5,48 +5,87 @@ import {
     Grid,
     Typography,
     TextField,
-    FormHelperText,
-    FormControl,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-    FormLabel,
-    makeStyles,
 } from "@material-ui/core";
+import { FormControl } from "@mui/material";
 import { withStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { Box } from "@mui/system";
+import Box from '@mui/material/Box';
 import ResultPage from "./ResultPage";
 import AnalysisPage from "./AnalysisPage";
 import ProPage from "./ProPage";
 import ConPage from "./ConPage";
 import axios from 'axios';
-import { isPlainObject } from "@mui/utils";
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import styled from "styled-components";
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const BlackTextTypography = withStyles({
     root: {
         color: "#000000",
         paddingBottom: "10px",
+        fontFamily: "Montserrat",
+        fontSize: "30px",
+        fontStyle: "normal",
+        fontWeight: "700",
+        lineHeight: "37px",
+        marginLeft: "45px",
+        display: "inline-flex",
+        textShadow: "1px 1px 2px gray",
     },
 })(Typography);
 
 const SearchTextField = withStyles({
     root: {
-        width: "1000px",
+        width: "50%",
         marginLeft: "48px"
     },
 })(TextField);
 
 const SearchIconButton = withStyles({
     root: {
-        paddingTop: "17px",
         position: "relative",
         right: "50px",
+        height: "55px",
     },
 })(IconButton);
 
-const statusList = ["none", "result", "pro", "con", "analysis"];
+const Container = withStyles({
+    root: {
+        backgroundColor: "#F5FAFD",
+        //backgroundSize: "cover",
+        //backgroundRepeat: "no-repeat",
+        //backgroundPosition: "center center",
+        //backgrounSize: "100%",
+    },
+})(Grid);
+
+const InlineBox = withStyles({
+    root: {
+        // marginTop: "1.5rem",
+    },
+})(Box);
+
+const DropDownItem = withStyles({
+    root: {
+		display: "block!important",
+		textAlign: "center",
+		color: "rgba(119, 145, 220, 1)!important",
+    },
+})(MenuItem);
+
+const SelectBtn = withStyles({
+    root: {
+    },
+})(Button);
+
+const statusList = ["none", "result", "analysis", "procon" ];
 
 function changeResult(status){
     if(status == statusList[0]){
@@ -67,20 +106,29 @@ function changeResult(status){
 }
 function HomePage() {
     const [keyword, setKeyword] = useState("");
-    const [status, setStatus] = useState(statusList[0]);
+    const [status, setStatus] = useState(statusList[1]);
     useEffect(() => {
         console.log("status: ", status);
         changeResult(status);
       }, [status]);
+    const [engine, setEngine] = React.useState('');
+    const handleChange = (event) => {
+        setEngine(event.target.value);
+    };
 
       function clickBtnHandler(e){
-          let targetId = e.target.closest(".MuiButton-root").id;
-          if(targetId === "proBtn"){
-            setStatus(statusList[2]);
-          } else if(targetId === "conBtn"){
-            setStatus(statusList[3]);
+          let targetId = e.target.closest(".MuiButtonBase-root").id;
+          console.log(document.querySelectorAll(".MuiBottomNavigation-root > .MuiButtonBase-root")[0]);
+          document.querySelectorAll(".MuiBottomNavigation-root > .MuiButtonBase-root")[0].style.color = "";
+          document.querySelectorAll(".MuiBottomNavigation-root > .MuiButtonBase-root")[1].style.color = "";
+          document.querySelectorAll(".MuiBottomNavigation-root > .MuiButtonBase-root")[2].style.color = "";
+          e.target.closest(".MuiButtonBase-root").style.color = "#7791DC";
+          if(targetId === "resultBtn"){
+            setStatus(statusList[1]);
           } else if(targetId === "analysisBtn"){
-              setStatus(statusList[4]);
+            setStatus(statusList[2]);
+          } else if(targetId === "proconBtn"){
+              setStatus(statusList[3]);
           }
       }
 
@@ -104,15 +152,16 @@ function HomePage() {
 
 
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12} align="center">
-                <Box clone mt="3rem">
+        <Container container spacing={1}>
+            <Grid item xs={12}>
+                <InlineBox component="div" display="inline-flex" sx={{ m: "2rem" }}>
                     <BlackTextTypography component="h4" variant="h4">
-                        대쉬
+                        D A S H
                     </BlackTextTypography>
-                </Box>
-                <Box
+                </InlineBox>
+                <InlineBox
                     component="form"
+                    display="inline-flex"
                     onSubmit={(e) => {
                         e.preventDefault();
                         // requestUrl(keyword);
@@ -120,7 +169,6 @@ function HomePage() {
                         setStatus(statusList[1]);
                     }}
                 >
-                    <div style={{ whiteSpace: "nowrap" }}>
                         <SearchTextField
                             id="outlined-basic"
                             variant="outlined"
@@ -132,16 +180,40 @@ function HomePage() {
                         <SearchIconButton type="submit" aria-label="search">
                             <SearchIcon />
                         </SearchIconButton>
-                    </div>
-                </Box>
+                    <Box sx={{ minWidth: 130, display: "inline-flex", marginRight: "50px"}}>
+      		<FormControl fullWidth>
+        	<InputLabel id="select-label">engine</InputLabel>
+        	<Select
+          	labelId="select-label"
+          	id="select"
+          	value={engine}
+          	label="engine"
+            sx={{ position: "absoulute"}}
+          	onChange={handleChange}
+        	>
+          	<DropDownItem value={"네이버뉴스"}>네이버뉴스</DropDownItem>
+          	<DropDownItem value={"구글뉴스"}>구글뉴스</DropDownItem>
+          	<DropDownItem value={"트위터"}>트위터</DropDownItem>
+            <DropDownItem value={"다나와"}>다나와</DropDownItem>
+        	</Select>
+      		</FormControl>
+    		</Box>
+            <Box sx={{ width: 500 }}>
+            <BottomNavigation
+                showLabels
+                value={status}
+                onChange={clickBtnHandler}
+            >
+                <BottomNavigationAction id="resultBtn" style={{color: "#7791DC"}} label="Result" icon={<RestoreIcon />} />
+                <BottomNavigationAction id="analysisBtn" style={{}} label="Analysis" icon={<FavoriteIcon />} />
+                <BottomNavigationAction id="proconBtn" style={{}} label="ProCon" icon={<LocationOnIcon />} />
+            </BottomNavigation>
+            </Box>
+            </InlineBox>
+            <hr style={{width: "95%", color: "#7791DC", backgroundColor: "#7791DC", height: "1px"}}></hr>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={8}>
-            <Button id="proBtn" variant="contained" onClick={clickBtnHandler}>긍정</Button>
-            <span>&nbsp;&nbsp;&nbsp;</span>
-            <Button id="conBtn" variant="contained" onClick={clickBtnHandler}>부정</Button>
-            <span>&nbsp;&nbsp;&nbsp;</span>
-            <Button id="analysisBtn" variant="contained" onClick={clickBtnHandler}>분석결과</Button>
             </Grid>
             <Grid item xs={2}></Grid>
             <Grid item xs={2}></Grid>
@@ -156,7 +228,7 @@ function HomePage() {
             <Grid item xs={12}></Grid>
             <Grid item xs={12}></Grid>
             <Grid item xs={12}></Grid>
-        </Grid>
+        </Container>
     );
 }
 

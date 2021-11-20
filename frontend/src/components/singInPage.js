@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 function Copyright(props) {
     return (
@@ -37,6 +38,19 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+const ContainerSignIn = withStyles({
+    root: {
+        // backgroundColor: "rgba(255, 255, 255, 30)",
+        // backgroundSize: "cover",
+        // backgroundRepeat: "no-repeat",
+        // backgroundPosition: "center center",
+        // backgrounSize: "100%",
+        // borderRadius: "30px",
+        // paddingLeft: "150px!important",
+        // paddingRight: "150px!important",
+    },
+})(Container);
+
 function SignInPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -52,7 +66,7 @@ function SignInPage() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <ContainerSignIn component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -60,13 +74,19 @@ function SignInPage() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                        borderRadius: "30px",
+                        paddingTop: "30px",
+                        paddingLeft: "45px",
+                        paddingRight: "45px",
+                        paddingBottom: "30px",
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <Avatar sx={{ m: 1, bgcolor: "#ffdb76f2" }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Welcome Back
                     </Typography>
                     <Box
                         component="form"
@@ -123,7 +143,7 @@ function SignInPage() {
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
-            </Container>
+            </ContainerSignIn>
         </ThemeProvider>
     );
 }
