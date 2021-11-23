@@ -233,12 +233,12 @@ function HomePage() {
 						}}
 					>
 						<FormControl fullWidth>
-							<InputLabel id="select-label">engine</InputLabel>
+							<InputLabel id="select-label">엔진</InputLabel>
 							<Select
 								labelId="select-label"
 								id="selectengine"
 								value={engine}
-								label="engine"
+								label="엔진"
 								sx={{ position: "absoulute" }}
 								onChange={handleChange}
 							>

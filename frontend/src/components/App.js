@@ -59,7 +59,7 @@ const Title = styled.h1`
         letter-spacing: 0em;
         text-align: center;
         margin-top: ${marginTop}px;
-        textShadow: "1px 1px 2px gray",
+        text-shadow: 1px 1px 2px gray;
 `
 
 const App = () => {

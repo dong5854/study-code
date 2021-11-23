@@ -4,7 +4,6 @@ import { scaleOrdinal } from 'd3-scale';
 import styled from "styled-components";
 
 const Tabletitle = styled.div`
-	margin-bottom: 15px;
 	font-weight: bold;
 	text-align: left;
 `;

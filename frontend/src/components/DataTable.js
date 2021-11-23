@@ -105,7 +105,7 @@ const rows = [
 
 export default function DataTable() {
 	return (
-		<div style={{ height: 400, width: "100%" }}>
+		<div style={{ height: 400, width: "95%", backgroundColor: "rgba(255, 255, 255, 0.6)" }}>
 			<DataGrid
 				rows={rows}
 				columns={columns}
