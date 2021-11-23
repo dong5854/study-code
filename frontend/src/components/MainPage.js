@@ -190,13 +190,13 @@ function MainPage() {
 						>
 							<FormControl fullWidth>
 								<InputLabel id="select-label">
-									engine
+									엔진
 								</InputLabel>
 								<Select
 									labelId="select-label"
 									id="select"
 									value={engine}
-									label="engine"
+									label="엔진"
 									onChange={handleChange}
 								>
 									<DropDownItem value={"네이버뉴스"}>

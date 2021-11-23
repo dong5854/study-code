@@ -70,7 +70,7 @@ function SignUpPage() {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign up
+                        회원가입
                     </Typography>
                     <Box
                         component="form"
@@ -86,7 +86,7 @@ function SignUpPage() {
                                     required
                                     fullWidth
                                     id="firstName"
-                                    label="First Name"
+                                    label="이름"
                                     autoFocus
                                 />
                             </Grid>
@@ -95,7 +95,7 @@ function SignUpPage() {
                                     required
                                     fullWidth
                                     id="lastName"
-                                    label="Last Name"
+                                    label="성"
                                     name="lastName"
                                     autoComplete="family-name"
                                 />
@@ -105,7 +105,7 @@ function SignUpPage() {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="이메일"
                                     name="email"
                                     autoComplete="email"
                                 />
@@ -115,7 +115,7 @@ function SignUpPage() {
                                     required
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    label="비밀번호"
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
@@ -128,12 +128,12 @@ function SignUpPage() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign Up
+                            회원가입
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <RouterLink to="/signin">
-                                    Already have an account? Sign In
+                                    로그인
                                 </RouterLink>
                             </Grid>
                         </Grid>

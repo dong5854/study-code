@@ -2,6 +2,8 @@ import { Grid } from "@mui/material";
 import React, { Component } from "react";
 import ProconChart from "./PieChart";
 import TopFiveTable from "./TopFiveTable";
+import WordCloudPro from "./WordCloudPro";
+import WordCloudCon from "./WordCloudCon";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 
@@ -26,11 +28,16 @@ function AnalysisPage() {
 				<Grid item xs={6} style={{ marginBottom: "50px" }}>
 					<ProconChart></ProconChart>
 				</Grid>
-				<Grid item xs={6}>
+				<Grid item xs={6} style={{ marginTop: "50px" }}>
 					<Tabletitle>추천 수 top5</Tabletitle>
 					<TopFiveTable></TopFiveTable>
 				</Grid>
-				<Grid item xs={6}></Grid>
+				<Grid item xs={3}>
+				< WordCloudPro />
+				</Grid>
+				<Grid item xs={3}>
+				< WordCloudCon />
+				</Grid>
 			</Grid>
 		);
 	} else {

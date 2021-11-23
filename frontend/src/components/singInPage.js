@@ -86,7 +86,7 @@ function SignInPage() {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Welcome Back
+						환영합니다
 					</Typography>
 					<Box
 						component="form"
@@ -99,7 +99,7 @@ function SignInPage() {
 							required
 							fullWidth
 							id="email"
-							label="Email Address"
+							label="이메일"
 							name="email"
 							autoComplete="email"
 							autoFocus
@@ -109,7 +109,7 @@ function SignInPage() {
 							required
 							fullWidth
 							name="password"
-							label="Password"
+							label="패스워드"
 							type="password"
 							id="password"
 							autoComplete="current-password"
@@ -118,7 +118,7 @@ function SignInPage() {
 							control={
 								<Checkbox value="remember" color="primary" />
 							}
-							label="Remember me"
+							label="로그인 상태 유지"
 						/>
 						<Button
 							type="submit"
@@ -126,7 +126,7 @@ function SignInPage() {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
-							Sign In
+							로그인
 						</Button>
 						<Grid container>
 							<Grid item xs>
@@ -136,7 +136,7 @@ function SignInPage() {
 							</Grid>
 							<Grid item>
 								<RouterLink to="/signup">
-									Don't have an account? Sign Up
+									회원가입
 								</RouterLink>
 							</Grid>
 						</Grid>
