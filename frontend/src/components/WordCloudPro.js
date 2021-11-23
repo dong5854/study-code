@@ -6,9 +6,7 @@ import styled from "styled-components";
 const Tabletitle = styled.div`
 	margin-bottom: 15px;
 	font-weight: bold;
-	width: 50%;
 	text-align: left;
-  position: absolute;
 `;
 
 const data = [

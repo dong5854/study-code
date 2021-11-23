@@ -182,7 +182,7 @@ function HomePage() {
 	}
 
 	return (
-		<Container container spacing={1}>
+		<Container container spacing={1} style={{overflowY: "scroll"}}>
 			<Grid item xs={12}>
 				<InlineBox
 					component="div"
@@ -296,11 +296,9 @@ function HomePage() {
 			<Grid item xs={2}></Grid>
 			<Grid item xs={8}></Grid>
 			<Grid item xs={2}></Grid>
-			<Grid item xs={2}></Grid>
-			<Grid item xs={8} align="center">
+			<Grid item xs={12} align="center">
 				{changeResult(status)}
 			</Grid>
-			<Grid item xs={2}></Grid>
 			<Grid item xs={12}></Grid>
 			<Grid item xs={12}></Grid>
 			<Grid item xs={12}></Grid>
