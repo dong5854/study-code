@@ -82,7 +82,7 @@ function WordCloudCon(){
   }));
   return(
     <div style={{width: "100%", height: "100%", marginTop: "50px"}}>
-      <Tabletitle>qn정 키워드</Tabletitle>
+      <Tabletitle>부정 키워드</Tabletitle>
     <WordCloud
       width={1000}
       height={750}
