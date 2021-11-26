@@ -1,5 +1,11 @@
+@font-face {
+    font-family: 'GodoB';
+    src: url('../font/GodoB.otf') format('truetype');
+}
+
 html, body {
     height:100%;
+    font-family: 'GodoB';
     margin: 0;
     padding: 0;
 }

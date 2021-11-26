@@ -10,6 +10,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import HomePage from "./HomePage";
+import axios from "axios";
 import {
 	BrowserRouter as Router,
 	Route,
@@ -19,6 +20,25 @@ import {
 let marginTop = 0;
 if (window.innerHeight > 800) {
 	marginTop = (window.innerHeight - 800) / 2;
+}
+
+function requestUrl(keyword,engine) {
+	console.log("requset?", keyword, engine);
+
+	const requestOptions = {
+		url: "/api/connect_crawl",
+		method: "POST",
+		header: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+		data: {
+			keyword: keyword,
+			engine: engine,
+		},
+	};
+
+	axios(requestOptions).then((response) => console.log(response));
 }
 
 const Title = styled.div`
@@ -93,6 +113,27 @@ const LeftBox = styled.div`
 	z-index: 1;
 `;
 
+const RightBox = styled.div`
+	backdrop-filter: blur(30px);
+	position: absolute;
+	height: 100%;
+	width: 50%;
+	z-index: 1;
+	left: 50%;
+`;
+
+const WhiteBox = styled.div`
+	display: flex;
+	background-color: rgba(255, 255, 255, 0.45);
+	width: 365px;
+	height: 80.88px;
+	border-radius: 50px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	margin-top: 130px;
+`;
+
 const SearchBox = withStyles({
 	root: {
 		width: "60%",
@@ -142,7 +183,7 @@ function MainPage() {
 				<LeftBox></LeftBox>
 				<ContentGrid item xs={6}>
 					<Title>DASH</Title>
-					<Description>
+					<Description style={{fontFamily: "GodoB"}}>
 						업계 기술 및 시장 동향 파악과 마케팅 자동화 툴
 					</Description>
 					<DescriptionEng>
@@ -151,11 +192,15 @@ function MainPage() {
 					</DescriptionEng>
 					<OfficeImg src="/static/img/office_img.png"></OfficeImg>
 				</ContentGrid>
-				<ContentGrid item xs={6}></ContentGrid>
 				<ContentGrid item xs={6}>
+					<WhiteBox style={{marginLeft: "40px"}}><div>Step 1 : 검색할 키워드와 검색엔진을 선택하세요</div><img src="/static/img/BrazucaSitting.png" style={{position: "absolute", marginLeft: "360px", marginBottom: "100px"}}></img></WhiteBox>
+					<WhiteBox style={{marginLeft: "auto", marginRight: "40px"}}><div>Step 2 : 크롤링 결과를 한눈에 확인하세요</div><img src="/static/img/IsometricStickersCharts.png" style={{position: "absolute", marginLeft: "240px", marginBottom: "150px"}}></img></WhiteBox>
+				</ContentGrid>
+				<ContentGrid item xs={6} style={{fontFamily: "GodoB"}}>
 					{" "}
 					<Box
 						component="form"
+						style={{fontFamily: "GodoB"}}
 						onSubmit={(e) => {
 							e.preventDefault();
 							// requestUrl(keyword);
@@ -171,10 +216,12 @@ function MainPage() {
 					>
 						<SearchBox
 							id="outlined-basic"
+							style={{fontFamily: "GodoB"}}
 							variant="outlined"
 							label="검색 키워드"
 							autoComplete="off"
-							InputProps={{ style: { paddingRight: "40px" } }}
+							InputProps={{ style: { paddingRight: "40px", fontFamily: "GodoB" } }}
+							InputLabelProps={{style: {fontFamily: "GodoB"}}}
 							onChange={(e) => setKeyword(e.target.value)}
 						/>
 						<SearchIconButton type="submit" aria-label="search">
@@ -189,32 +236,36 @@ function MainPage() {
 							}}
 						>
 							<FormControl fullWidth>
-								<InputLabel id="select-label">
+								<InputLabel id="select-label" style={{fontFamily: "GodoB"}}>
 									엔진
 								</InputLabel>
 								<Select
 									labelId="select-label"
+									style={{fontFamily: "GodoB"}}
 									id="select"
 									value={engine}
 									label="엔진"
 									onChange={handleChange}
 								>
-									<DropDownItem value={"네이버뉴스"}>
+									<DropDownItem value={"네이버뉴스"} style={{fontFamily: 'GodoB'}}>
 										네이버뉴스
 									</DropDownItem>
-									<DropDownItem value={"구글뉴스"}>
+									<DropDownItem value={"구글뉴스"} style={{fontFamily: 'GodoB'}}>
 										구글뉴스
 									</DropDownItem>
-									<DropDownItem value={"트위터"}>
+									<DropDownItem value={"트위터"} style={{fontFamily: 'GodoB'}}>
 										트위터
 									</DropDownItem>
-									<DropDownItem value={"다나와"}>
+									<DropDownItem value={"다나와"} style={{fontFamily: 'GodoB'}}>
 										다나와
 									</DropDownItem>
 								</Select>
 							</FormControl>
 						</Box>
 					</Box>
+				</ContentGrid>
+				<ContentGrid item xs={6}>
+				<WhiteBox style={{marginLeft: "40px"}}><div>Step 3 : 저장하고 공유하세요!</div><img src="/static/img/MoneyverseTransactionApproved.png" style={{position: "absolute", marginRight: "240px", marginBottom: "150px"}}></img></WhiteBox>
 				</ContentGrid>
 			</Grid>
 		</>

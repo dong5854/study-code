@@ -91,6 +91,7 @@ function changeResult(status) {
 		return <ProConPage />;
 	}
 }
+
 function HomePage() {
 	const searchKeyword = new URLSearchParams(window.location.search).get(
 		"keyword"
@@ -98,12 +99,11 @@ function HomePage() {
 	const searchEngine = new URLSearchParams(window.location.search).get(
 		"engine"
 	);
+
 	const [keyword, setKeyword] = useState(searchKeyword);
 	const [status, setStatus] = useState(statusList[1]);
-	useEffect(() => {
-		changeResult(status);
-	}, [status]);
 	const [engine, setEngine] = React.useState(searchEngine);
+
 	const handleChange = (event) => {
 		setEngine(event.target.value);
 	};
@@ -149,23 +149,6 @@ function HomePage() {
 		)[2].style.color = "";
 	}
 
-	function requestUrl(keyword) {
-		console.log("requset?", keyword);
-
-		const requestOptions = {
-			url: "/api/find-result",
-			method: "POST",
-			header: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-			data: {
-				keyword: keyword,
-			},
-		};
-
-		axios(requestOptions).then((response) => console.log(response));
-	}
 	function insertUrlParam(key, value) {
 		if (history.pushState) {
 			let searchParams = new URLSearchParams(window.location.search);
@@ -182,7 +165,7 @@ function HomePage() {
 	}
 
 	return (
-		<Container container spacing={1} style={{overflowY: "scroll"}}>
+		<Container container spacing={1} style={{ overflowY: "scroll" }}>
 			<Grid item xs={12}>
 				<InlineBox
 					component="div"
@@ -219,7 +202,13 @@ function HomePage() {
 						label="검색 키워드"
 						autoComplete="off"
 						defaultValue={searchKeyword}
-						InputProps={{ style: { paddingRight: "40px" } }}
+						InputProps={{
+							style: {
+								paddingRight: "40px",
+								fontFamily: "GodoB",
+							},
+						}}
+						InputLabelProps={{ style: { fontFamily: "GodoB" } }}
 						onChange={(e) => setKeyword(e.target.value)}
 					/>
 					<SearchIconButton type="submit" aria-label="search">
@@ -233,25 +222,43 @@ function HomePage() {
 						}}
 					>
 						<FormControl fullWidth>
-							<InputLabel id="select-label">엔진</InputLabel>
+							<InputLabel
+								id="select-label"
+								style={{ fontFamily: "GodoB" }}
+							>
+								엔진
+							</InputLabel>
 							<Select
 								labelId="select-label"
+								style={{ fontFamily: "GodoB" }}
 								id="selectengine"
 								value={engine}
 								label="엔진"
 								sx={{ position: "absoulute" }}
 								onChange={handleChange}
 							>
-								<DropDownItem value={"네이버뉴스"}>
+								<DropDownItem
+									value={"네이버뉴스"}
+									style={{ fontFamily: "GodoB" }}
+								>
 									네이버뉴스
 								</DropDownItem>
-								<DropDownItem value={"구글뉴스"}>
+								<DropDownItem
+									value={"구글뉴스"}
+									style={{ fontFamily: "GodoB" }}
+								>
 									구글뉴스
 								</DropDownItem>
-								<DropDownItem value={"트위터"}>
+								<DropDownItem
+									value={"트위터"}
+									style={{ fontFamily: "GodoB" }}
+								>
 									트위터
 								</DropDownItem>
-								<DropDownItem value={"다나와"}>
+								<DropDownItem
+									value={"다나와"}
+									style={{ fontFamily: "GodoB" }}
+								>
 									다나와
 								</DropDownItem>
 							</Select>

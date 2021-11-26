@@ -33,6 +33,13 @@ function ProconChart() {
 				color: "#fff",
 				backgroundColor: "#404040",
 			},
+			legend: {
+				labels: {
+					font: {
+						style: "GodoB",
+					},
+				},
+			},
 		},
 	};
 	const config = {

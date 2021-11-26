@@ -20,7 +20,7 @@ function AnalysisPage() {
 	);
 	if (searchEngine == "트위터") {
 		return (
-			<Grid container style={{marginTop: "2rem", alignItems: "center"}}>
+			<Grid container style={{ marginTop: "2rem", alignItems: "center" }}>
 				<Grid item xs={6} style={{ marginBottom: "50px" }}>
 					<Tabletitle>연관 키워드 top5</Tabletitle>
 					<TopFiveTable></TopFiveTable>
@@ -33,10 +33,10 @@ function AnalysisPage() {
 					<TopFiveTable></TopFiveTable>
 				</Grid>
 				<Grid item xs={3}>
-				< WordCloudPro />
+					<WordCloudPro />
 				</Grid>
 				<Grid item xs={3}>
-				< WordCloudCon />
+					<WordCloudCon />
 				</Grid>
 			</Grid>
 		);

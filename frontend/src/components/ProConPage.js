@@ -37,17 +37,25 @@ function ProConPage() {
 				>
 					<Button
 						id="pro"
-						style={{ background: "#7791DC", color: "white" }}
+						style={{
+							background: "#7791DC",
+							color: "white",
+							fontFamily: "GodoB",
+						}}
 						onClick={HandleClick}
 					>
 						긍정
 					</Button>
-					<Button id="con" style={{}} onClick={HandleClick}>
+					<Button
+						id="con"
+						style={{ fontFamily: "GodoB" }}
+						onClick={HandleClick}
+					>
 						부정
 					</Button>
 				</ButtonGroup>
 			</Box>
-			<DataTable></DataTable>
+			{/* <DataTable></DataTable> */}
 		</>
 	);
 }

@@ -15,6 +15,21 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { withStyles } from "@material-ui/core/styles";
 
+const theme = createTheme({
+	typography: {
+		fontFamily: "GodoB",
+	},
+	overrides: {
+		MuiTypography: {
+			root: {
+				fontFamily: "GodoB",
+			},
+			body2: {
+				fontFamily: "GodoB",
+			},
+		},
+	},
+});
 function Copyright(props) {
 	return (
 		<Typography
@@ -35,8 +50,6 @@ function Copyright(props) {
 		</Typography>
 	);
 }
-
-const theme = createTheme();
 
 const ContainerSignIn = withStyles({
 	root: {
@@ -135,9 +148,7 @@ function SignInPage() {
                                 </Link> */}
 							</Grid>
 							<Grid item>
-								<RouterLink to="/signup">
-									회원가입
-								</RouterLink>
+								<RouterLink to="/signup">회원가입</RouterLink>
 							</Grid>
 						</Grid>
 					</Box>

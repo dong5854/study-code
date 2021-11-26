@@ -17,6 +17,30 @@ import styled from "styled-components";
 import SignInPage from "./singInPage";
 import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: "GodoB" !important;
+  }
+`;
+
+const theme = createTheme({
+    typography: {
+        fontFamily: "GodoB"
+    },
+    overrides: {
+        MuiTypography:{
+            root:{
+                fontFamily: "GodoB"
+            },
+            body2: {
+                fontFamily: "GodoB"
+            }
+        }
+    }
+  });
 
 const loggedIn = false;
 
@@ -65,6 +89,8 @@ const Title = styled.h1`
 const App = () => {
     return (
         <>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
             <Router>
                 <Switch>
                     <Route path="/signup">
@@ -101,6 +127,7 @@ const App = () => {
                     </Route>
                 </Switch>
             </Router>
+        </ThemeProvider>
         </>
     );
 };
