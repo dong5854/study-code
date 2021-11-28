@@ -172,6 +172,13 @@ const DropDownItem = withStyles({
 })(MenuItem);
 
 function MainPage() {
+	if((sessionStorage.getItem("user") === null) && (localStorage.getItem("user") === null)){
+		alert("로그인 후 사용해주세요.")
+		window.location.href = "/";
+	}
+
+	const engineList = ["네이버뉴스", "구글뉴스", "다음뉴스", "다나와"];
+
 	const [keyword, setKeyword] = useState("");
 	const [engine, setEngine] = React.useState("");
 	const handleChange = (event) => {
@@ -247,17 +254,17 @@ function MainPage() {
 									label="엔진"
 									onChange={handleChange}
 								>
-									<DropDownItem value={"네이버뉴스"} style={{fontFamily: 'GodoB'}}>
-										네이버뉴스
+									<DropDownItem value={engineList[0]} style={{fontFamily: 'GodoB'}}>
+										{engineList[0]}
 									</DropDownItem>
-									<DropDownItem value={"구글뉴스"} style={{fontFamily: 'GodoB'}}>
-										구글뉴스
+									<DropDownItem value={engineList[1]} style={{fontFamily: 'GodoB'}}>
+										{engineList[1]}
 									</DropDownItem>
-									<DropDownItem value={"트위터"} style={{fontFamily: 'GodoB'}}>
-										트위터
+									<DropDownItem value={engineList[2]} style={{fontFamily: 'GodoB'}}>
+										{engineList[2]}
 									</DropDownItem>
-									<DropDownItem value={"다나와"} style={{fontFamily: 'GodoB'}}>
-										다나와
+									<DropDownItem value={engineList[3]} style={{fontFamily: 'GodoB'}}>
+										{engineList[3]}
 									</DropDownItem>
 								</Select>
 							</FormControl>

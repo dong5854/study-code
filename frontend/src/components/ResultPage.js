@@ -16,7 +16,7 @@ function ResultPage() {
 
 	useEffect(() => {
 		if (sessionStorage.getItem(searchKeyword + searchEngine) === null) {
-			sessionStorage.clear();
+			// sessionStorage.clear();
 		} else {
 			const dataObj = JSON.parse(
 				sessionStorage.getItem(searchKeyword + searchEngine)
@@ -49,8 +49,8 @@ function ResultPage() {
 				let id = element.id;
 				let title = element.title;
 				let description = element.text;
-				let like = null;
-				let date = element.text;
+				let like = element.like;
+				let date = element.created_at;
 				let url = element.url;
 				let tempObj = {
 					id: id,

@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { withStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 const theme = createTheme({
 	typography: {
@@ -65,16 +66,54 @@ const ContainerSignIn = withStyles({
 })(Container);
 
 function SignInPage() {
+	if(sessionStorage.getItem("user") != null){
+		window.location.href = "/mainpage";
+	}else if(localStorage.getItem("user") != null){
+		window.location.href = "/mainpage";
+	}
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
+		console.log(data);
+		const keep = data.get("keep");
 		// eslint-disable-next-line no-console
+		const email = data.get("email");
+		const password = data.get("password");
 		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
+			keep: keep,
+			email: email,
+			password: password,
+		});
+		const requestOptions = {
+			url: "/api/login",
+			method: "POST",
+			header: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			data: {
+				email: email,
+				password: password,
+			},
+		};
+		axios(requestOptions).then((response) => {
+			console.log(response);
+			if(response.data.success == 'Login success'){
+				if(keep == "remember"){
+					window.localStorage.clear;
+					window.localStorage.setItem("user", email);
+				} else{
+					window.sessionStorage.setItem("user", email);
+				}
+				window.location.href = "/mainpage";
+			} else if (response.data.success == "Login fail, Wrong password"){
+				alert("비밀번호가 틀렸습니다. 다시 확인해주세요")
+			} else {
+				alert("존재하지 않는 계정입니다.")
+			}
 		});
 		//데이터베이스에서 값을 비교한 후 리디렉션할 예정
-		window.location.href = "/mainpage";
 	};
 
 	return (
@@ -114,7 +153,8 @@ function SignInPage() {
 							id="email"
 							label="이메일"
 							name="email"
-							autoComplete="email"
+							autoComplete="off"
+							// autoComplete="email"
 							autoFocus
 						/>
 						<TextField
@@ -125,11 +165,12 @@ function SignInPage() {
 							label="패스워드"
 							type="password"
 							id="password"
-							autoComplete="current-password"
+							autoComplete="off"
+							// autoComplete="current-password"
 						/>
 						<FormControlLabel
 							control={
-								<Checkbox value="remember" color="primary" />
+								<Checkbox id= "keep" name="keep" value="remember" color="primary" />
 							}
 							label="로그인 상태 유지"
 						/>

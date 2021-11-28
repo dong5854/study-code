@@ -42,7 +42,13 @@ const theme = createTheme({
     }
   });
 
-const loggedIn = false;
+
+let loggedIn = false;
+if(sessionStorage.getItem("user") != null){
+    loggedIn = true;
+}else if(localStorage.getItem("user") != null){
+    loggedIn = true;
+}
 
 let marginTop = 0;
 if (window.innerHeight > 800){
@@ -120,7 +126,7 @@ const App = () => {
                     <Route path="/analysis" component={AnalysisPage} />
                     <Route path="/">
                         {loggedIn ? (
-                            <Redirect to="/homepage" />
+                            <Redirect to="/mainpage" />
                         ) : (
                             <Redirect to="/signin" />
                         )}

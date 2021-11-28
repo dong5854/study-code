@@ -93,12 +93,23 @@ function changeResult(status) {
 }
 
 function HomePage() {
+	if((sessionStorage.getItem("user") === null) && (localStorage.getItem("user") === null)){
+		alert("로그인 후 사용해주세요.")
+		window.location.href = "/";
+	}
+
 	const searchKeyword = new URLSearchParams(window.location.search).get(
 		"keyword"
 	);
 	const searchEngine = new URLSearchParams(window.location.search).get(
 		"engine"
 	);
+	const engineList = ["네이버뉴스", "구글뉴스", "다음뉴스", "다나와"];
+
+	if(searchKeyword === null || searchKeyword === "" || searchKeyword === undefined || engineList.includes(searchEngine) === false){
+		alert("잘못된 접근입니다.")
+		window.location.href = "/"
+	}
 
 	const [keyword, setKeyword] = useState(searchKeyword);
 	const [status, setStatus] = useState(statusList[1]);
@@ -115,6 +126,8 @@ function HomePage() {
 		const newEngine = new URLSearchParams(window.location.search).get(
 			"engine"
 		);
+		setKeyword(newKeyword);
+		setEngine(newEngine);
 		document.querySelector("#searchbox").value = newKeyword;
 		document.querySelector("#selectengine").innerHTML = newEngine;
 		let targetId = e.target.closest(".MuiButtonBase-root").id;
@@ -194,6 +207,7 @@ function HomePage() {
 						// document.querySelector("#selectengine").innerHTML =
 						// 	engine;
 						resetNavi();
+						window.location.reload();
 					}}
 				>
 					<SearchTextField
@@ -250,10 +264,10 @@ function HomePage() {
 									구글뉴스
 								</DropDownItem>
 								<DropDownItem
-									value={"트위터"}
+									value={"다음뉴스"}
 									style={{ fontFamily: "GodoB" }}
 								>
-									트위터
+									다음뉴스
 								</DropDownItem>
 								<DropDownItem
 									value={"다나와"}
@@ -291,6 +305,7 @@ function HomePage() {
 						</BottomNavigation>
 					</Box>
 				</InlineBox>
+				<Button variant="text" style={{marginTop: "2.5rem", marginRight: "4rem", fontFamily: "'GodoB'", float: "right"}}>로그아웃</Button>
 				<hr
 					style={{
 						width: "95%",

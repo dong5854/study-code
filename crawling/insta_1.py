@@ -1,141 +1,176 @@
-from bs4 import BeautifulSoup
+import time
+import re
+from datetime import datetime
+
+import pandas as pd
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from time import sleep
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
+from pandas import DataFrame
 
-import time as time
-import requests
-import getpass
-import urllib.request
-import matplotlib.pyplot as plt
+# 현재 시간 저장 - 파일 이름 생성
+file_date = str(datetime.now())
+file_date = file_date[:file_date.rfind(':')].replace(' ', '_')
+file_date = file_date.replace(':', '시') + '분'
 
-driver = webdriver.Chrome(r"/home/ubuntu/django-project/chromedriver")
+chrome_options = webdriver.ChromeOptions()
+chrome_options.headless = True
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
-loginUrl = f"https://www.instagram.com/accounts/login/"
+driver = webdriver.Chrome(executable_path='/home/ubuntu/django-project/chromedriver',chrome_options=chrome_options)
 
-driver.get(loginUrl)
+Url_login = f'https://www.instagram.com/accounts/login/'
+#Url_login = f'https://www.instagram.com/?hl=ko'
 
-# 화면 전체화면으로 키우기
-driver.maximize_window()
+driver.get(Url_login)
+time.sleep(5)
 
-# 인스타그램 로그인
-# userId = getpass.getpass("ID: ")    # getpass는 input을 받을때 정보를 .....로 처리함
-# userPw = getpass.getpass("PW: ")
-userId = 'donggukice@gmail.com'
-userPw = 'capstone'
+html = driver.page_source
+soup = BeautifulSoup(html, 'lxml')
 
-hashTag = input("검색할 해쉬태그를 입력하세요: ")
+# 로그인 정보
+user_id = 'winwin3306@naver.com'
+user_pw = 'capstone'
+#
+# 검색 정보
+search_word = input("인스타그램에서 검색할 단어를 입력하세요.")
+search_post = 10
+cur_post = 0
 
-# 인스타그램 창에서 로그인 공간 찾기
-element_id = driver.find_element_by_name("username")
-element_id.send_keys(userId)
-element_password = driver.find_element_by_name("password")
-element_password.send_keys(userPw)
-sleep(1.5)
+# 인스타그램 창에서 로그인 하기
+#driver.find_element(By.XPATH, '//*[@id="loginForm"]/div/div[1]/div/label/input').send_keys(user_id)
+#driver.find_element(By.XPATH, '//*[@id="loginForm"]/div/div[2]/div/label/input').send_keys(user_pw)
+#driver.find_element(By.XPATH, '//*[@id="loginForm"]/div/div[3]').click()
 
-# 로그인 버튼 클릭
-driver.find_element_by_css_selector('button.sqdOP.L3NKy.y3zKF').click()
-sleep(3)
-driver.implicitly_wait(20)
+driver.find_element_by_name('username').send_keys(user_id)
+driver.find_element_by_name('password').send_keys(user_pw)
+time.sleep(3)
+#driver.find_element_by_class_name('qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.bkEs3.CovQj.jKUp7.DhRcB').send_keys(Keys.ENTER)
+#qF0y9.Igw0E.IwRSH.eGOV_._4EzTm
+n = 0
+while(n <3):
+    driver.find_element_by_xpath('//*[@id="loginForm"]/div/div[3]').click()
+    n += 1
+time.sleep(3)
 
 # 로그인 정보 저장 나중에 하기 버튼 클릭
-driver.find_element_by_css_selector('button.sqdOP.yWX7d.y3zKF').click()
-sleep(3)
+driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/div/div/div/button').click()
+time.sleep(3)
 # 알림 설정 나중에 하기 버튼 클릭
-driver.find_element_by_css_selector('button.aOOlW.HoLwm').click()
-sleep(3)
+#driver.find_element_by_css_selector('button.aOOlW.HoLwm').click()
+#time.sleep(3)
 
 # 해시태그 검색하기
-searchUrl = f"https://www.instagram.com/explore/tags/{hashTag}"
+searchUrl = f"https://www.instagram.com/explore/tags/{search_word}"
 driver.get(searchUrl)
-sleep(3)
+time.sleep(5)
 
-# 데이터 저장할 Dictionary
-insta_dict = {'id': [],
-              'date': [],
-              'like': [],
-              'text': [],
-              'hashtag': []}
+# 아이디 저장할 리스트
+ids = []
+# 본문 저장할 리스트
+texts = []
+# 태그 저장할 리스트
+tags = []
+# 좋아요 수 저장할 리스트
+likes = []
+# 날짜 저장할 리스트
+dates = []
 
-# 첫번째 게시물 클릭
-first_post = driver.find_element_by_class_name('eLAPa')
 
-seq = 0
-start = time.time()
+# 제일 상단 게시물 클릭하기
+first_post = driver.find_element_by_class_name('eLAPa').click()
+time.sleep(5)
 
 while True:
     try:
-        if driver.find_element_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow'):
-            if seq % 20 == 0:
-                print('{}번째 수집 중'.format(seq), time.time() - start, sep='\t')
+        driver.implicitly_wait(5)
 
-            ## id 정보 수집
-            try:
-                info_id = driver.find_element_by_css_selector('h2._6lAjh').text
-                insta_dict['id'].append(info_id)
-            except:
-                info_id = driver.find_element_by_css_selector('div.C4VMK').text.split()[0]
-                insta_dict['id'].append(info_id)
-
-            ## 시간정보 수집
-            time_raw = driver.find_element_by_css_selector('time.FH9sR.Nzb55')
-            time_info = pd.to_datetime(time_raw.get_attribute('datetime')).normalize()
-            insta_dict['date'].append(time_info)
-
-            ## like 정보 수집
-            try:
-                driver.find_element_by_css_selector('button.sqdOP.yWX7d._8A5w5')
-                like = driver.find_element_by_css_selector('button.sqdOP.yWX7d._8A5w5').text
-                insta_dict['like'].append(like)
-
-            except:
-                insta_dict['like'].append('영상')
-
-            ##text 정보수집
-            raw_info = driver.find_element_by_css_selector('div.C4VMK').text.split()
-            text = []
-            for i in range(len(raw_info)):
-                ## 첫번째 text는 아이디니까 제외
-                if i == 0:
-                    pass
-                ## 두번째부터 시작
-                else:
-                    if '#' in raw_info[i]:
-                        pass
-                    else:
-                        text.append(raw_info[i])
-            clean_text = ' '.join(text)
-            insta_dict['text'].append(clean_text)
-
-            ##hashtag 수집
-            raw_tags = driver.find_elements_by_css_selector('a.xil3i')
-            hash_tag = []
-            for i in range(len(raw_tags)):
-                if raw_tags[i].text == '':
-                    pass
-                else:
-                    hash_tag.append(raw_tags[i].text)
-
-            insta_dict['hashtag'].append(hash_tag)
-
-            seq += 1
-
-            # 100개의 게시물 크롤링
-            if seq == 100:
-                break
-
-            driver.find_element_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow').click()
-            time.sleep(1.5)
+        # 아이디 수집
+        id = driver.find_element_by_class_name('sqdOP.yWX7d._8A5w5.ZIAjV').text
+        ids.append(id)
 
 
+
+        # 본문 수집
+        time.sleep(1)
+        try:
+            text = soup.select('div.C4VMK > span')[0].text
+        except:
+            text = ''
+
+
+        # try:
+        #     textss = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'body > div._2dDPU.QPGbb.CkGkG > div._32yJO > div > article > div > div.HP0qD > div > div > div.eo2As > div.EtaWk > ul > div > li > div > div > div.C4VMK > span')))
+        #     text = textss.text
+        #     #text = driver.find_element_by_css_selector(
+        #         #'body > div._2dDPU.QPGbb.CkGkG > div._32yJO > div > article > div > div.HP0qD > div > div > div.eo2As > div.EtaWk > ul > div > li > div > div > div.C4VMK > span').text
+        # except NoSuchElementException:
+        #    break
+
+        texts.append(text)
+
+
+        # 시간 수집
+        date = driver.find_element_by_css_selector('time.FH9sR.Nzb55').text
+
+        # 시간 데이터 변환
+        if date.find('시간') != -1 or date.find('일') != -1 or date.find('분') != -1:
+            date_text = '0주'  # 날짜가 시간, 일, 분 단위일 경우 0주로 변환해서 출력
         else:
+            date_text = date
+        dates.append(date_text)
+
+        # 좋아요 수집
+        like = driver.find_element_by_css_selector('body > div._2dDPU.QPGbb.CkGkG > div._32yJO > div > article > div > div.HP0qD > div > div > div.eo2As > section.EDfFK.ygqzn > div > div > a > span').text
+        likes.append(like)
+
+        # 태그 수집
+        data = driver.find_element_by_css_selector('.C7I1f.X7jCj')
+        tag_raw = data.text
+        tag = re.findall('#[A-Za-z0-9가-힣]+', tag_raw)
+        tag = ''.join(tag).replace("#", " ")  # "#" 제거
+
+        tags.append(tag.split())
+
+        cur_post += 1
+
+        if(cur_post > search_post):
             break
+        time.sleep(5)
 
-    except:
-        driver.find_element_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow').click()
-        time.sleep(2)
 
-test = pd.DataFrame.from_dict(insta_dict)
-test.head()
+        try:
+            # 최대 30초까지 기다렸다가, > 모양 클릭하여 다음 게시물로 넘어가기
+            # WebDriverWait(driver,30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a._65Bje.coreSpriteRightPaginationArrow')))
+            # driver.find_element_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow').click()
+            nextIcon = driver.find_element_by_css_selector(
+                "body > div._2dDPU.QPGbb.CkGkG > div.EfHg9 > div > div > div.l8mY4.feth3 > button > div > span > svg")
+            nextIcon.click()
+            time.sleep(3)
+        except NoSuchElementException:
+            time.sleep(3)
+            pass
 
-print()
+    except ValueError:
+        cur_post -= 1
+        pass
+        time.sleep(3)
+
+
+    data = {"id" : ids, "text": texts, "like": likes, "date": dates, "tag":tags}
+    data_frame = pd.DataFrame(data, columns=['id', 'text', 'like', 'date', 'tag'])
+
+
+folder_path = './result'
+xlsx_file_name = '인스타_{}_{}.xlsx'.format(search_word, file_date)
+
+data_frame.to_excel('./result' + xlsx_file_name)
+
+print('엑셀 저장 완료 | 경로 : {}\\{}'.format(folder_path, xlsx_file_name))

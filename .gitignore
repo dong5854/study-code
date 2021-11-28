@@ -1,5 +1,6 @@
 #가상환경과 패키지 ignore
 venv
+crawl
 #npm 패키지 ignore
 frontend/node_modules
 #.idea ignore

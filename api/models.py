@@ -2,17 +2,23 @@ from django.db import models
 import string
 import random
 
-# def generate_unique_code():
-#     length = 6
+class Crawled(models.Model):
+    keyword = models.CharField(max_length=20, null=True, blank=True)
+    engine = models.CharField(max_length=20)
+    title = models.TextField(max_length=200, null=True, blank=True) 
+    text = models.TextField(max_length=5000, null=True, blank=True) #summary
+    who = models.CharField(max_length=20, null=True, blank=True) #ID
+    url = models.CharField(max_length=200, null=True, blank=True) #link
+    created_at = models.TextField(null=True, blank=True) #date
+    recommendation = models.IntegerField( default= 0, null=True, blank=True) #like
+    hashtag = models.TextField(max_length=500, null=True, blank=True)
+    words = models.TextField(max_length=2000, null=True, blank=True)
 
-#     while True:
-#         code = ''.join(random.choices(string.ascii_letters, k = length))
-#         if Result.objects.filter(id=id).count() == 0:
-
-#             break
-#     return code
-
-
+class User(models.Model):
+    user_id = models.CharField(max_length=40, primary_key = True)
+    user_pwd = models.CharField(max_length=40)
+    user_name_first = models.CharField(max_length=30)
+    user_name_last = models.CharField(max_length=30)
 class Result(models.Model):
     keyword = models.CharField(max_length=20)
     engine = models.CharField(max_length=20)
@@ -25,11 +31,6 @@ class Result(models.Model):
     URL = models.CharField(max_length=50)
     web_kind = models.CharField(max_length=20)
     pro_con = models.BooleanField(null=False, default = 1)
-
-class User(models.Model):
-    User_id = models.CharField(max_length=30, primary_key = True)
-    User_pwd = models.CharField(max_length=20)
-    User_name = models.CharField(max_length=20)
 
 class Record(models.Model):
     Rec_id = models.CharField(max_length=30, primary_key= True)

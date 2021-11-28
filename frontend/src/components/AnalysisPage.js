@@ -18,7 +18,7 @@ function AnalysisPage() {
 	let searchEngine = new URLSearchParams(window.location.search).get(
 		"engine"
 	);
-	if (searchEngine == "트위터") {
+	if (searchEngine == "다음뉴스" || searchEngine == "네이버뉴스" || searchEngine == "구글뉴스" || searchEngine == "다나와") {
 		return (
 			<Grid container style={{ marginTop: "2rem", alignItems: "center" }}>
 				<Grid item xs={6} style={{ marginBottom: "50px" }}>
@@ -28,14 +28,14 @@ function AnalysisPage() {
 				<Grid item xs={6} style={{ marginBottom: "50px" }}>
 					<ProconChart></ProconChart>
 				</Grid>
-				<Grid item xs={6}>
+				{/* <Grid item xs={6}>
 					<Tabletitle>추천 수 top5</Tabletitle>
 					<TopFiveTable></TopFiveTable>
-				</Grid>
-				<Grid item xs={3}>
+				</Grid> */}
+				<Grid item xs={6}>
 					<WordCloudPro />
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={6}>
 					<WordCloudCon />
 				</Grid>
 			</Grid>

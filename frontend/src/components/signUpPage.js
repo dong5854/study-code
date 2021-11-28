@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 function Copyright(props) {
 	return (
@@ -55,10 +56,39 @@ function SignUpPage() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
+		const email =  data.get("email");
+		const password =  data.get("password");
+		const firstName =  data.get("firstName");
+		const lastName =  data.get("lastName");
 		// eslint-disable-next-line no-console
 		console.log({
 			email: data.get("email"),
 			password: data.get("password"),
+			firstName: data.get("firstName"),
+			lastName: data.get("lastName"),
+		});
+		const requestOptions = {
+			url: "/api/create_user",
+			method: "POST",
+			header: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			data: {
+				email: email,
+				password: password,
+				name_first: firstName,
+				name_last: lastName,
+			},
+		};
+		axios(requestOptions).then((response) => {
+			console.log(response);
+			if(response.data.success == true){
+				alert("회원가입 성공")
+				window.location.href = "/";
+			} else{
+				alert("이미 존재하는 ID입니다")
+			}
 		});
 	};
 
@@ -95,7 +125,8 @@ function SignUpPage() {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextField
-									autoComplete="given-name"
+									autoComplete="off"
+									// autoComplete="given-name"
 									name="firstName"
 									required
 									fullWidth
@@ -111,7 +142,8 @@ function SignUpPage() {
 									id="lastName"
 									label="성"
 									name="lastName"
-									autoComplete="family-name"
+									autoComplete="off"
+									// autoComplete="family-name"
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -121,7 +153,8 @@ function SignUpPage() {
 									id="email"
 									label="이메일"
 									name="email"
-									autoComplete="email"
+									autoComplete="off"
+									// autoComplete="email"
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -132,7 +165,8 @@ function SignUpPage() {
 									label="비밀번호"
 									type="password"
 									id="password"
-									autoComplete="new-password"
+									autoComplete="off"
+									// autoComplete="new-password"
 								/>
 							</Grid>
 						</Grid>

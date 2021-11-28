@@ -12,11 +12,11 @@ function createData(top, val) {
 }
 
 const rows = [
-	createData(1, "1등"),
-	createData(2, "2등"),
-	createData(3, "3등"),
-	createData(4, "4등"),
-	createData(5, "5등"),
+	createData(1, "맥북에어프로"),
+	createData(2, "맥북12인치"),
+	createData(3, "맥북15인치"),
+	createData(4, "애플"),
+	createData(5, "맥북프로"),
 ];
 
 function TopFiveTable() {
