@@ -35,7 +35,7 @@ def Daum_News(keyword):
     # 정렬 방식 - 관련도 순, 오래된 순, 최신순
     sort = 0 
 
-    url = f'https://m.search.daum.net/search?w=news&DA=STC&enc=utf8&cluster=y&cluster_page=1&q={search_word}&sort={sort[input1]}&p={cur_page}'
+    url = f'https://m.search.daum.net/search?w=news&DA=STC&enc=utf8&cluster=y&cluster_page=1&q={search_word}&sort={sort}&p={cur_page}'
 
     while cur_page <= 5:
         req = requests.get(url)
@@ -51,7 +51,6 @@ def Daum_News(keyword):
 
         for title in news_links:
             titles.append(title.get_text())
-            idx += 1
 
         for summary in summarys_links:
             summarys.append(summary.get_text())
@@ -69,7 +68,7 @@ def Daum_News(keyword):
         cur_page += 1
 
         if(cur_page != 1):
-            url = f'https://m.search.daum.net/search?w=news&DA=STC&enc=utf8&cluster=y&cluster_page=1&q={search_word}&sort={sort[input1]}&p={cur_page}'
+            url = f'https://m.search.daum.net/search?w=news&DA=STC&enc=utf8&cluster=y&cluster_page=1&q={search_word}&sort={sort}&p={cur_page}'
 
     print(when_write)
     result = {"title": titles, "summary": summarys, "who": who_write, "when": when_write, "link": links}

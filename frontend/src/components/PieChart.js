@@ -8,13 +8,25 @@ const PieChart = styled.div`
 `;
 
 function ProconChart() {
+	const searchKeyword = new URLSearchParams(window.location.search).get(
+		"keyword"
+	);
+	const searchEngine = new URLSearchParams(window.location.search).get(
+		"engine"
+	);
+	const goodcnt = window.sessionStorage.getItem(
+		searchKeyword + searchEngine + "good_cnt"
+	);
+	const badcnt = window.sessionStorage.getItem(
+		searchKeyword + searchEngine + "bad_cnt"
+	);
 	const canvasDom = useRef(null);
 	const data = {
 		labels: ["긍정", "부정"],
 		datasets: [
 			{
 				label: "긍부정 차트",
-				data: [300, 50],
+				data: [goodcnt, badcnt],
 				backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
 				hoverOffset: 4,
 			},

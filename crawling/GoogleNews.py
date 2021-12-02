@@ -1,3 +1,7 @@
+# 
+
+# -*- coding: utf-8 -*-
+
 import os
 import requests
 import pandas as pd
@@ -6,21 +10,17 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from newspaper import Article
+from crawling import sh_keyword
+from crawling import sh_keysent
 
-# import sys
-# sys.path.append('/home/ubuntu/django-project/crawling/key')
-
-#from .key import sh_keyword
-#from .key import keysent
-
-def Google_News(search_word):
-    # 현재 시간 저장 - 파일 이름 생성
+def Google_News(keyword):
+# 현재 시간 저장 - 파일 이름 생성
     date = str(datetime.now())
     date = date[:date.rfind(':')].replace(' ', '_')
     date = date.replace(':', '시') + '분'
 
     # 검색어 입력
-    search_word = search_word
+    search_word = keyword
 
     # 웹드라이버 옵션 - 창 뜨지 않도록
     options = webdriver.ChromeOptions()
@@ -60,40 +60,53 @@ def Google_News(search_word):
     titles = []
     links = []
     texts = []
-    # words = []
+    words = []
 
+    keywords = []
+
+    n=0
     # `lxml` 파싱한 결과물에서 제목과 링크 추출 후 데이터로 저장
     for link in soup.select('h3 > a'):
         href = 'https://news.google.com' + link.get('href')[1:]
-        title = link.string
-        titles.append(title)
+        title = link.string 
+        titles.append(title) 
         links.append(href)
-
-        driver.implicitly_wait(5)
+        
         article = Article(href, language='ko')
-
         try:
             article.download()
             article.parse()
         except:
             article.text = " "
         text = article.text
-        texts.append(text)
+        sents = text.split('.')
 
-        # try: 
-        #     keysents = keysent.keysents(sents)
-        # except ValueError:
-        #     keysents = " "
-        # texts.append(keysents)
+        try: 
+            keysents = sh_keysent.keysents(sents)
+        except ValueError:
+            keysents = " "
 
-        # try: 
-        #     keywords = sh_keyword.keywords(sents)
-        # except ValueError:
-        #     keywords = " "
-        # words.append(keywords)
+        texts.append(keysents)
+        
+        try: 
+            keywords = sh_keyword.keywords(sents)
+        except ValueError:
+            keywords = " "
+        
+        words.append(keywords)
+        n += 1
+        if (n==10):
+            break
 
-    data = {'title': titles, 'text': texts, 'link': links}
-    data_frame = pd.DataFrame(data, columns=['title', 'text', 'link'])
+    try:
+        final_keywords = sh_keyword.keywords(texts)
+    except:
+        final_keywords = " "
+
+    keywords.append(final_keywords)
+
+    data = {'title': titles, 'text': texts, 'word': words, 'link': links, 'keywords':keywords}
+    data_frame = pd.DataFrame(data, columns=['title', 'text', 'word', 'link'])
 
     file_name = '구글뉴스_{}_{}'.format(search_word, date)
 
@@ -103,6 +116,5 @@ def Google_News(search_word):
     folder_path = '/home/ubuntu/django-project/crawling/result'
 
     print('저장 완료 | 경로 : {}\\{}'.format(folder_path, file_name))
-    #os.startfile(folder_path)
 
     return data

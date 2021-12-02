@@ -27,7 +27,8 @@ def Naver_News(search_word,sort):
     who_write = []
     # 뉴스 링크 저장할 리스트
     links = []
-
+    # 뉴스 작성 시간 저장할 리스트
+    when_write = []
     #print('네이버 뉴스에서 검색할 단어를 입력하세요.')
     search_word = search_word
 
@@ -65,7 +66,9 @@ def Naver_News(search_word,sort):
             else:
                 who_write.append(who.get_text())
         # print(who_write)
-
+        for when in when_write_links:
+            if((when.get_text())[0].isnumeric()):
+                when_write.append(when.get_text())
         for href in news_links:
             links.append(href.get('href'))
 
@@ -83,7 +86,7 @@ def Naver_News(search_word,sort):
         #print(db[i])
 
     # 모든 리스트 딕셔너리 형태로 저장
-    result = {"title": titles, "summary": summarys, "who": who_write, "link": links}
+    result = {"title": titles, "summary": summarys, "who": who_write, "link": links, "created_at": when_write}
 
     print('크롤링 완료')
 

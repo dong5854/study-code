@@ -11,7 +11,7 @@ function ResultPage() {
 	const searchEngine = new URLSearchParams(window.location.search).get(
 		"engine"
 	);
-	const [data, setData] = useState();
+	const [data, setData] = useState("");
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {

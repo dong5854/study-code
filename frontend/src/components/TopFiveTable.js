@@ -11,15 +11,32 @@ function createData(top, val) {
 	return { top, val };
 }
 
-const rows = [
-	createData(1, "맥북에어프로"),
-	createData(2, "맥북12인치"),
-	createData(3, "맥북15인치"),
-	createData(4, "애플"),
-	createData(5, "맥북프로"),
-];
+function TopFiveTable({ goodwords, badwords }) {
+	const data = goodwords.concat(badwords);
+	data.sort(function (a, b) {
+		if (a[1] > b[1]) {
+			return -1;
+		}
+		if (a[1] < b[1]) {
+			return 1;
+		}
+		return 0;
+	});
+	let rowslist = [];
+	data.forEach((element) => {
+		if (rowslist.includes(element[0])) {
+		} else {
+			rowslist.push(element[0]);
+		}
+	});
+	const rows = [
+		createData(1, rowslist[0]),
+		createData(2, rowslist[1]),
+		createData(3, rowslist[2]),
+		createData(4, rowslist[3]),
+		createData(5, rowslist[4]),
+	];
 
-function TopFiveTable() {
 	return (
 		<TableContainer component={Paper} style={{ width: "50%" }}>
 			<Table sx={{ minWidth: 300 }} aria-label="simple table">

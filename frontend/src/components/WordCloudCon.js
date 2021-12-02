@@ -77,13 +77,24 @@ const schemeCategory10ScaleOrdinal = scaleOrdinal(conColor10);
 const fontSize = (word) => word.value / 20;
 const rotate = (word) => (word.value % 90) - 45;
 
-function WordCloudCon() {
+function WordCloudCon({ condata }) {
+	let data = [];
+	condata.forEach((element, i) => {
+		data[i] = { text: element[0], value: element[1] };
+	});
 	const newData = data.map((item) => ({
 		text: item.text,
 		value: Math.random() * 1000,
 	}));
 	return (
-		<div style={{ width: "85%", height: "90%", marginTop: "50px", marginLeft: "auto"}}>
+		<div
+			style={{
+				width: "85%",
+				height: "90%",
+				marginTop: "50px",
+				marginLeft: "auto",
+			}}
+		>
 			<Tabletitle>부정 키워드</Tabletitle>
 			<WordCloud
 				width={1000}

@@ -22,25 +22,6 @@ if (window.innerHeight > 800) {
 	marginTop = (window.innerHeight - 800) / 2;
 }
 
-function requestUrl(keyword,engine) {
-	console.log("requset?", keyword, engine);
-
-	const requestOptions = {
-		url: "/api/connect_crawl",
-		method: "POST",
-		header: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-		data: {
-			keyword: keyword,
-			engine: engine,
-		},
-	};
-
-	axios(requestOptions).then((response) => console.log(response));
-}
-
 const Title = styled.div`
 	width: 323px;
 	height: 86px;

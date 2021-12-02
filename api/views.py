@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import generics, status
-from .serializers import ResultSerializer, CrawlSerializer, UserSerializer
-from .models import Result, Crawled, User
+from .serializers import CrawlSerializer, UserSerializer
+from .models import Crawled, User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -11,9 +11,11 @@ from crawling.NaverNews import Naver_News
 from crawling.GoogleNews_final import Google_News
 from crawling.Danawa import Danawa
 from crawling.DaumNews import Daum_News
-#from machinelearning.machine import sentiment_predict
-from crawling.sh_keyword import keywords
+from machinelearning.S_machine import sentiment_predict
+from crawling.key.sh_keyword import keywords
 import psycopg2
+import datetime as dt
+import re
 
 def reset_crawl_data():
     conn_string = "host='localhost' dbname ='d_database' user='d_user' password='dash1234'"
@@ -33,22 +35,36 @@ def main(request):
     return HttpResponse("Hello")
 
 class Analysis(APIView):
-    """serializer_class = CrawlSerializer
-
+    serializer_class = CrawlSerializer
+    
     def post(self,request, format=None):
-        data = request.data["data"] # 
+        data = request.data["data"] 
         good_cnt = 0
         bad_cnt = 0
+        good_list = []
+        bad_list = []
         good_word_list = []
         bad_word_list = []
-        for i in range(len(data['id'])): # data의 개수 만큼 반복
+        for i in range(len(data)): # data의 개수 만큼 반복
+            list = []
             description = data[i]['description']
             good_or_bad, score = sentiment_predict(description)
             if good_or_bad == "good":
                 good_cnt += 1
+                good_list.append(description)
             elif good_or_bad =="bad":
                 bad_cnt += 1
-            word_list = keywords(description)"""
+                bad_list.append(description)
+        good_words = keywords(good_list)
+        bad_words = keywords(bad_list)
+        for i in good_words:
+            good_word_list.append(i)
+        for i in bad_words:
+            bad_word_list.append(i)
+
+        send_data = {'good_cnt' : good_cnt, 'bad_cnt' : bad_cnt, 'good_word_list' : good_word_list, 'bad_word_list' : bad_word_list}
+        print(send_data)
+        return Response(send_data, status=status.HTTP_200_OK) 
             
 class Login(APIView):
     serializer_class = UserSerializer
@@ -107,13 +123,13 @@ class CreateUser(APIView):
 class ConnectCrawl(APIView):
     serializer_class = CrawlSerializer
     
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         reset_crawl_data()
-        #keyword = request.data["keyword"]
-        keyword = '블랙보리'
+        keyword = request.data["keyword"]
+        #keyword = '시진핑'
         sort = '0' #frontend에서 sort가 있을 경우 sort 유형 받아오기
-        #engine = request.data["engine"]
-        engine = "구글뉴스"
+        engine = request.data["engine"]
+        #engine = "네이버뉴스"
         print("keyword : " + keyword + " , engine : " + engine)
 
         
@@ -157,7 +173,27 @@ class ConnectCrawl(APIView):
                     link = list(Dict_Naver_News['link'])[i]
                     print("link : " + link)
                     created_at = list(Dict_Naver_News['created_at'])[i]
+                    
+                    if ("전" in created_at):
+                        year = int(dt.datetime.now().strftime("%Y"))
+                        month = int(dt.datetime.now().strftime("%M"))
+                        day = int(dt.datetime.now().strftime("%d"))
+                        current_time = dt.datetime.now()
+                        if ("일" in created_at):
+                            cal_time = current_time - dt.timedelta(days=int(re.sub(r'[^0-9]', '', created_at)))
+                        elif ("시간" in created_at):
+                            cal_time = current_time - dt.timedelta(hours=int(re.sub(r'[^0-9]', '', created_at)))
+                        else: #("분" in created_at)
+                            cal_time = current_time - dt.timedelta(minutes=int(re.sub(r'[^0-9]', '', created_at)))
+
+                        created_at = cal_time.strftime("%Y-%m-%d")
+
+                    else:
+                        year, month, day, nothing = created_at.split('.')
+                        created_at = year + "-" + month + "-" + day
+
                     print("created_at : " + created_at)
+
                     json_form[i] = {'id':i+1, 'keyword':keyword, 'engine':"Naver", 'title':title, 
                     'text':summary, 'who':who, 'url':link, 'like':None, 'created_at':created_at, 'words':None}
 
@@ -197,73 +233,47 @@ class ConnectCrawl(APIView):
 
             elif engine == "다음뉴스":
                 Dict_Daum = Daum_News(keyword)
-                json_form = [0 for i in range(len(Daum_News['title']))]
-                for i in range(len(Daum_News['title'])):
+                json_form = [0 for i in range(len(Dict_Daum['title']))]
+                for i in range(len(Dict_Daum['title'])):
                     print(i)
-                    title = list(Daum_News['title'])[i]
+                    title = list(Dict_Daum['title'])[i]
                     print("title : " + title)
-                    summary = list(Daum_News['summary'])[i]
+                    summary = list(Dict_Daum['summary'])[i]
                     print("summary : " + summary)
-                    who = list(Daum_News['who'])[i]
+                    who = list(Dict_Daum['who'])[i]
                     print("who : " + who)
-                    when = list(Daum_News['when'])[i]
-                    print("when : " + when)
-                    link = list(Daum_News['link'])[i]
+                    created_at = list(Dict_Daum['when'])[i]
+
+                    if ("전" in created_at):
+                        year = int(dt.datetime.now().strftime("%Y"))
+                        month = int(dt.datetime.now().strftime("%M"))
+                        day = int(dt.datetime.now().strftime("%d"))
+                        current_time = dt.datetime.now()
+                        if ("일" in created_at):
+                            cal_time = current_time - dt.timedelta(days=int(re.sub(r'[^0-9]', '', created_at)))
+                        elif ("시간" in created_at):
+                            cal_time = current_time - dt.timedelta(hours=int(re.sub(r'[^0-9]', '', created_at)))
+                        else: #("분" in created_at)
+                            cal_time = current_time - dt.timedelta(minutes=int(re.sub(r'[^0-9]', '', created_at)))
+
+                        created_at = cal_time.strftime("%Y-%m-%d")
+
+                    else:
+                        year, month, day, nothing = created_at.split('.')
+                        created_at = year + "-" + month + "-" + day
+
+                    print("created_at : " + created_at)
+                    link = list(Dict_Daum['link'])[i]
                     print("link : " + link)
 
                     json_form[i] = {'id':i+1, 'keyword':keyword, 'engine':"Daum", 'title':title,'who':who,
-                    'url':link, 'created_at':when, 'like':None, 'text':summary, 'words':None}
+                    'url':link, 'created_at':created_at, 'like':None, 'text':summary, 'words':None}
 
                     crawled = Crawled(id=i+1,keyword=keyword,engine="Daum",title=title,text=summary
-                    ,who=who,url=link,recommendation=None, created_at=when, words=None)
+                    ,who=who,url=link,recommendation=None, created_at=created_at, words=None)
                     crawled.save()
                 return Response(json_form, status=status.HTTP_200_OK)
 
         return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ResultView(generics.ListAPIView):
-    queryset = Result.objects.all()
-    serializer_class = ResultSerializer
-
-class ResultCreate(generics.CreateAPIView):
-    queryset = Result.objects.all()
-    serializer_class = ResultSerializer
-
-class GetResult(APIView):
-    serializer_class = ResultSerializer
-    lookup_url_kwargs = 'keyword'
-
-    def get(self, request, format=None):
-        #keyword = request.GET.get(self.lookup_url_kwargs)
-        keyword = '아이폰'
-        if keyword != None:
-            result = Result.objects.filter(keyword=keyword)
-            if len(result) > 0:
-                for i in range(len(result)):
-                    data = ResultSerializer(result[i]).data
-                return Response(data, status=status.HTTP_200_OK)
-
-            return Response({'Result Not Found'}, status=status.HTTP_404_NOT_FOUND)
-
-        return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class FindResult(APIView):
-    serializer_class = ResultSerializer
-
-    def post(self, request, format=None):
-        keyword = request.data["keyword"]
-        
-        if keyword != None:
-            result = Result.objects.filter(keyword=keyword)
-            if len(result) > 0:
-                for i in range(len(result)):
-                    data = ResultSerializer(result[i]).data
-                return Response(data, status=status.HTTP_200_OK)
-
-            return Response({'Result Not Found'}, status=status.HTTP_404_NOT_FOUND)
-
-        return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)    
 
 
