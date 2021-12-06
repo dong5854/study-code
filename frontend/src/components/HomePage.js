@@ -93,8 +93,11 @@ function changeResult(status) {
 }
 
 function HomePage() {
-	if((sessionStorage.getItem("user") === null) && (localStorage.getItem("user") === null)){
-		alert("로그인 후 사용해주세요.")
+	if (
+		sessionStorage.getItem("user") === null &&
+		localStorage.getItem("user") === null
+	) {
+		alert("로그인 후 사용해주세요.");
 		window.location.href = "/";
 	}
 
@@ -106,9 +109,14 @@ function HomePage() {
 	);
 	const engineList = ["네이버뉴스", "구글뉴스", "다음뉴스", "다나와"];
 
-	if(searchKeyword === null || searchKeyword === "" || searchKeyword === undefined || engineList.includes(searchEngine) === false){
-		alert("잘못된 접근입니다.")
-		window.location.href = "/"
+	if (
+		searchKeyword === null ||
+		searchKeyword === "" ||
+		searchKeyword === undefined ||
+		engineList.includes(searchEngine) === false
+	) {
+		alert("잘못된 접근입니다.");
+		window.location.href = "/";
 	}
 
 	const [keyword, setKeyword] = useState(searchKeyword);
@@ -175,6 +183,12 @@ function HomePage() {
 				searchParams.toString();
 			window.history.pushState({ path: newurl }, "", newurl);
 		}
+	}
+
+	function logOut() {
+		sessionStorage.clear();
+		localStorage.clear();
+		window.location.href = "/";
 	}
 
 	return (
@@ -287,25 +301,36 @@ function HomePage() {
 							<BottomNavigationAction
 								id="resultBtn"
 								style={{ color: "#7791DC" }}
-								label="Result"
+								label="크롤링 결과"
 								icon={<FindInPageIcon />}
 							/>
 							<BottomNavigationAction
 								id="analysisBtn"
 								style={{}}
-								label="Analysis"
+								label="분석 결과"
 								icon={<AnalyticsIcon />}
 							/>
 							<BottomNavigationAction
 								id="proconBtn"
 								style={{}}
-								label="ProCon"
+								label="긍정부정"
 								icon={<PeopleIcon />}
 							/>
 						</BottomNavigation>
 					</Box>
 				</InlineBox>
-				<Button variant="text" style={{marginTop: "2.5rem", marginRight: "4rem", fontFamily: "'GodoB'", float: "right"}}>로그아웃</Button>
+				<Button
+					variant="text"
+					style={{
+						marginTop: "2.5rem",
+						marginRight: "4rem",
+						fontFamily: "'GodoB'",
+						float: "right",
+					}}
+					onClick={logOut}
+				>
+					로그아웃
+				</Button>
 				<hr
 					style={{
 						width: "95%",

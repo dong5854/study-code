@@ -74,9 +74,14 @@ function ResultPage() {
 	return (
 		<>
 			{loading ? (
-				<Box sx={{ display: "flex", justifyContent: "center" }}>
-					<CircularProgress />
-				</Box>
+				<>
+					<Box sx={{ display: "flex", justifyContent: "center" }}>
+						<CircularProgress />
+					</Box>
+					<div style={{ marginTop: "30px" }}>
+						데이터를 수집중입니다..
+					</div>
+				</>
 			) : (
 				<DataTable data={data}></DataTable>
 			)}

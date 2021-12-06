@@ -4,7 +4,7 @@ import ProconChart from "./PieChart";
 import TopFiveTable from "./TopFiveTable";
 import WordCloudPro from "./WordCloudPro";
 import WordCloudCon from "./WordCloudCon";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -74,9 +74,14 @@ function AnalysisPage() {
 	return (
 		<>
 			{loading ? (
-				<Box sx={{ display: "flex", justifyContent: "center" }}>
-					<CircularProgress />
-				</Box>
+				<>
+					<Box sx={{ display: "flex", justifyContent: "center" }}>
+						<CircularProgress />
+					</Box>
+					<div style={{ marginTop: "30px" }}>
+						데이터를 분석중입니다..
+					</div>
+				</>
 			) : (
 				<Grid
 					container

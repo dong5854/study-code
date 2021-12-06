@@ -1,25 +1,12 @@
 import React, { Component, useState, useEffect } from "react";
 import DataTable from "./DataTable";
-import { Grid, Typography, TextField } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Box from "@mui/material/Box";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const proconList = ["pro", "con"];
-
-const Container = withStyles({
-	root: {
-		backgroundColor: "#F5FAFD",
-		//backgroundSize: "cover",
-		//backgroundRepeat: "no-repeat",
-		//backgroundPosition: "center center",
-		//backgrounSize: "100%",
-	},
-})(Grid);
-
 const searchKeyword = new URLSearchParams(window.location.search).get(
 	"keyword"
 );
@@ -36,7 +23,7 @@ function proconTable(procon) {
 				)}
 			></DataTable>
 		);
-	} else if (procon == proconList[1]) {
+	} else {
 		return (
 			<DataTable
 				data={JSON.parse(
@@ -84,7 +71,11 @@ function ProConPage() {
 		});
 	}, []);
 
-	function clickBtnHandler(e) {
+	//useEffect(() => {
+	//	proconTable(procon);
+	//}, [procon]);
+
+	function HandleClick(e) {
 		let targetId = e.target.closest(".MuiButton-outlined").id;
 		if (targetId === "pro") {
 			document.querySelector("#pro").style.background = "#7791DC";
@@ -100,69 +91,50 @@ function ProConPage() {
 			setProcon(proconList[1]);
 		}
 	}
-
 	return (
 		<>
-			{loading ? (
-				<>
-					<Box sx={{ display: "flex", justifyContent: "center" }}>
-						<CircularProgress />
-					</Box>
-					<div style={{ marginTop: "30px" }}>
-						데이터를 분석중입니다..
-					</div>
-				</>
-			) : (
-				<Container
-					container
-					spacing={1}
-					style={{ overflowY: "scroll" }}
+			{loading === false && (
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						"& > *": {
+							m: 1,
+						},
+					}}
 				>
-					<Grid item xs={12} align="center">
-						<Box
-							sx={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								"& > *": {
-									m: 1,
-								},
+					<ButtonGroup
+						variant="outlined"
+						aria-label="outlined button group"
+					>
+						<Button
+							id="pro"
+							style={{
+								background: "#7791DC",
+								color: "white",
+								fontFamily: "GodoB",
 							}}
+							onClick={HandleClick}
 						>
-							<ButtonGroup
-								variant="outlined"
-								aria-label="outlined button group"
-							>
-								<Button
-									id="pro"
-									style={{
-										background: "#7791DC",
-										color: "white",
-										fontFamily: "GodoB",
-									}}
-									onClick={clickBtnHandler}
-								>
-									긍정
-								</Button>
-								<Button
-									id="con"
-									style={{ fontFamily: "GodoB" }}
-									onClick={clickBtnHandler}
-								>
-									부정
-								</Button>
-							</ButtonGroup>
-						</Box>
-						{proconTable(procon)}
-					</Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-					<Grid item xs={12}></Grid>
-				</Container>
+							긍정
+						</Button>
+						<Button
+							id="con"
+							style={{ fontFamily: "GodoB" }}
+							onClick={HandleClick}
+						>
+							부정
+						</Button>
+					</ButtonGroup>
+				</Box>
+			)}
+			{loading ? (
+				<Box sx={{ display: "flex", justifyContent: "center" }}>
+					<CircularProgress />
+				</Box>
+			) : (
+				proconTable(procon)
 			)}
 		</>
 	);
