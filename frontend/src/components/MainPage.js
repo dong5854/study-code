@@ -158,6 +158,12 @@ function MainPage() {
 		window.location.href = "/";
 	}
 
+	function logOut() {
+		sessionStorage.clear();
+		localStorage.clear();
+		window.location.href = "/";
+	}
+
 	const engineList = ["네이버뉴스", "구글뉴스", "다음뉴스", "다나와"];
 
 	const [keyword, setKeyword] = useState("");
@@ -181,6 +187,18 @@ function MainPage() {
 					<OfficeImg src="/static/img/office_img.png"></OfficeImg>
 				</ContentGrid>
 				<ContentGrid item xs={6}>
+				<Button
+					variant="text"
+					style={{
+						marginTop: "2.5rem",
+						marginRight: "4rem",
+						fontFamily: "'GodoB'",
+						float: "right",
+					}}
+					onClick={logOut}
+				>
+					로그아웃
+				</Button>
 					<WhiteBox style={{marginLeft: "40px"}}><div>Step 1 : 검색할 키워드와 검색엔진을 선택하세요</div><img src="/static/img/BrazucaSitting.png" style={{position: "absolute", marginLeft: "360px", marginBottom: "100px"}}></img></WhiteBox>
 					<WhiteBox style={{marginLeft: "auto", marginRight: "40px"}}><div>Step 2 : 크롤링 결과를 한눈에 확인하세요</div><img src="/static/img/IsometricStickersCharts.png" style={{position: "absolute", marginLeft: "240px", marginBottom: "150px"}}></img></WhiteBox>
 				</ContentGrid>

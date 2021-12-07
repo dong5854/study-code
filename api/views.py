@@ -34,6 +34,27 @@ def reset_crawl_data():
 def main(request):
     return HttpResponse("Hello")
 
+class Procon(APIView):
+    serializer_class = CrawlSerializer
+
+    def post(self,request, foramt=None):
+
+        data = request.data["data"]
+        pro_list = []
+        con_list = []
+
+        for i in range(len(data)):
+            description = data[i]['description']
+            good_or_bad, score = sentiment_predict(description)
+            if good_or_bad == "good":
+                pro_list.append(data[i])
+            elif good_or_bad == "bad":
+                con_list.append(data[i])
+
+        send_data = {'pro_list' : pro_list, 'con_list' : con_list}
+        return Response(send_data, status=status.HTTP_200_OK) 
+
+
 class Analysis(APIView):
     serializer_class = CrawlSerializer
     
@@ -139,39 +160,33 @@ class ConnectCrawl(APIView):
                 Dict_Google_News = Google_News(keyword)
                 json_form = [0 for i in range(len(Dict_Google_News['title']))]
                 for i in range(len(Dict_Google_News['title'])):
-                    print(i)
                     title = list(Dict_Google_News['title'])[i]
-                    print("title : " + title)
                     text = list(Dict_Google_News['text'])[i]
-                    texts = []
+                    texts = ""
                     for x in text:
-                        texts.append(x)
+                        texts = texts + x
                     #print("text : " + text)
+                    print("------------------------------------------------------------------------")
+                    print(texts)
                     link = list(Dict_Google_News['link'])[i]
                     word = list(Dict_Google_News['word'])[i]
                     
                     json_form[i] = {'id':i+1, 'keyword':keyword, 'engine':"Google", 'title':title, 
-                    'text':text, 'url':link, 'like':None, 'created_at':None, 'word': word}
+                    'text':texts, 'url':link, 'like':None, 'created_at':None, 'word': word}
                     
-                    crawled = Crawled(id=i+1,keyword=keyword,engine="Google",title=title,text=text,url=link
+                    crawled = Crawled(id=i+1,keyword=keyword,engine="Google",title=title,text=texts,url=link
                     ,recommendation=None, created_at=None, words = word)
                     crawled.save()
-                data = {'keywords' : Dict_Google_News['keywords'], 'data' : json_form} 
-                return Response(data, status=status.HTTP_200_OK) 
+                return Response(json_form, status=status.HTTP_200_OK) 
 
             elif engine == "네이버뉴스": # 검색 엔진이 Naver일 경우
                 Dict_Naver_News = Naver_News(keyword,sort)
                 json_form = [0 for i in range(len(Dict_Naver_News['title']))]
                 for i in range(len(Dict_Naver_News['title'])):
-                    print(i)
                     title = list(Dict_Naver_News['title'])[i]
-                    print("title : " + title)
                     summary = list(Dict_Naver_News['summary'])[i]
-                    print("summary : " + summary)
                     who = list(Dict_Naver_News['who'])[i]
-                    print("who : " + who)
                     link = list(Dict_Naver_News['link'])[i]
-                    print("link : " + link)
                     created_at = list(Dict_Naver_News['created_at'])[i]
                     
                     if ("전" in created_at):
@@ -192,14 +207,13 @@ class ConnectCrawl(APIView):
                         year, month, day, nothing = created_at.split('.')
                         created_at = year + "-" + month + "-" + day
 
-                    print("created_at : " + created_at)
-
                     json_form[i] = {'id':i+1, 'keyword':keyword, 'engine':"Naver", 'title':title, 
                     'text':summary, 'who':who, 'url':link, 'like':None, 'created_at':created_at, 'words':None}
 
                     crawled = Crawled(id=i+1,keyword=keyword,engine="Naver",title=title,text=summary,who=who,url=link
                     ,recommendation=None, created_at=created_at, words=None)
                     crawled.save()
+                print(json_form)
                 return Response(json_form, status=status.HTTP_200_OK)
 
             elif engine == "다나와": # 검색 엔진이 Danawa일 경우
@@ -275,5 +289,3 @@ class ConnectCrawl(APIView):
                 return Response(json_form, status=status.HTTP_200_OK)
 
         return Response({'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-
-

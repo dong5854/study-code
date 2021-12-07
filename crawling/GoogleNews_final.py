@@ -69,8 +69,7 @@ def Google_News(keyword):
     for link in soup.select('h3 > a'):
         href = 'https://news.google.com' + link.get('href')[1:]
         title = link.string 
-        titles.append(title) 
-        links.append(href)
+        
         
         article = Article(href, language='ko')
         try:
@@ -85,9 +84,11 @@ def Google_News(keyword):
             keysents = sh_keysent.keysents(sents)
         except ValueError:
             keysents = " "
-
+        if keysents == " ":
+            continue
         texts.append(keysents)
-        
+        titles.append(title) 
+        links.append(href)
         try: 
             keywords = sh_keyword.keywords(sents)
         except ValueError:

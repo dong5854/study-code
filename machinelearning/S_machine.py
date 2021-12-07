@@ -139,7 +139,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 loaded_model = tensorflow.keras.models.load_model('machinelearning/Last_model.h5')
 def sentiment_predict(new_sentence):
-
+  print(new_sentence)
   new_sentence = mecab.morphs(new_sentence) # 토큰화
   new_sentence = [word for word in new_sentence if not word in stopwords] # 불용어 제거
 
