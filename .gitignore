@@ -19,3 +19,5 @@ frontend/migrations/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+chromedriver
+db.sqlite3
