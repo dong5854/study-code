@@ -8,13 +8,8 @@ $request = parse_url($uri, PHP_URL_PATH);
 $params = parse_url($uri, PHP_URL_QUERY);
 
 switch($request){
-    case '/':
-    case "":
-        require __DIR__.'/main.html';
-        break;
     default:
         require __DIR__.'/main.html';
     break;
 }
-
 ?>
