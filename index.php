@@ -9,7 +9,7 @@ $params = parse_url($uri, PHP_URL_QUERY);
 
 switch($request){
     default:
-        require __DIR__.'/main.html';
+        require __DIR__.'/main.php';
     break;
 }
 ?>
