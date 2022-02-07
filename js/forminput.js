@@ -1,9 +1,9 @@
 $(document).ready(function() {
     let table = $('#example').DataTable({
-        // columnDefs: [{
-        //     orderable: false,
-        //     targets: [1,2,3]
-        // }]
+        columnDefs: [{
+            orderable: false,
+            targets: [0,4]
+        }]
     });
 
     $('#edit').click( function() {
