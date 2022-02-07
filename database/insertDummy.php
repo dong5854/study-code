@@ -9,7 +9,7 @@ else {
 	echo "Database connection failed";
     echo $DB->lastErrorMsg();
 }
-
+$DB->query("drop table test");
 $DB->query("create table test (_id, userid, username, level);");
 
 for($i=0; $i < 100; $i++){

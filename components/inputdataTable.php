@@ -12,14 +12,12 @@
         </thead>
         <tbody>
             <?php
-                $id = 0;
                 while($row = $result->fetchArray(SQLITE3_ASSOC)){
-                    GLOBAL $id;
-                    echo '<tr id="idx['.$row["userid"].']">
-                    <td><input type="checkbox" id="row-'.$id.'-select" name="row-'.$id.'-select" class="select-one"></td>
-                    <td><input type="text" id="row-'.$id.'-userid" name="row-'.$id.'-userid" value="'.$row["userid"].'"><i>'.$row["userid"].'</i></td>
-                    <td><input type="text" id="row-'.$id.'-username" name="row-'.$id.'-username" value="'.$row["username"].'"><i>'.$row["username"].'</i></td>
-                    <td><select size="1" id="row-'.$id.'-level" name="row-'.$id.'-level">
+                    echo '<tr id='.$row["_id"].'>
+                    <td><input type="checkbox" id="row-'.$row["_id"].'-select" name="row-'.$row["_id"].'-select" class="select-one"></td>
+                    <td><input type="text" id="row-'.$row["_id"].'-userid" name="row-'.$row["_id"].'-userid" value="'.$row["userid"].'"><i>'.$row["userid"].'</i></td>
+                    <td><input type="text" id="row-'.$row["_id"].'-username" name="row-'.$row["_id"].'-username" value="'.$row["username"].'"><i>'.$row["username"].'</i></td>
+                    <td><select size="1" id="row-'.$row["_id"].'-level" name="row-'.$row["_id"].'-level">
                         <option value="1" selected="selected">
                             1
                         </option>
@@ -30,9 +28,8 @@
                             3
                         </option>
                     </select></td>
-                    <td><button type="submit" class="edit">edit</button><button type="submit" class="delete">delete</button></td>
+                    <td><button type="submit" class="edit">edit</button><button type="button" class="delete">delete</button></td>
                 </tr>';
-                    $id += 1;
             }
             ?>
         </tbody>
