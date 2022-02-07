@@ -6,7 +6,7 @@ $(document).ready(function() {
         // }]
     });
 
-    $('button').click( function() {
+    $('#edit').click( function() {
         let data = table.$('input, select').serialize();
         alert(
             "The following data would have been submitted to the server: \n\n"+
@@ -14,4 +14,12 @@ $(document).ready(function() {
         );
         return false;
     } );
+
+    $('.delete').click( function() {
+        $(this).closest("tr").remove();
+    })
+
+    $('.delete-multi').click(function (){
+        $("input:checked").closest("tr").remove();
+    })
 } );
