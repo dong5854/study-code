@@ -12,7 +12,7 @@
     <title>main</title>
 </head>
 <body>
-    <?php include "./components/inputdataTable.html"; ?>
+    <?php include "./components/inputdataTable.php"; ?>
 </body>
 <script>
     <?php require_once("./js/forminput.js") ?>

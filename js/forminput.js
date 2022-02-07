@@ -22,4 +22,12 @@ $(document).ready(function() {
     $('.delete-multi').click(function (){
         $("input:checked").closest("tr").remove();
     })
+
+    $('#select-all').click(function(){
+        if($('#select-all').is(":checked")){
+            $('.select-one').attr("checked",true);
+        } else{
+            $('.select-one').attr("checked",false);
+        }
+    })
 } );
