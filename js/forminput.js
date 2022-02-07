@@ -25,9 +25,9 @@ $(document).ready(function() {
 
     $('#select-all').click(function(){
         if($('#select-all').is(":checked")){
-            $('.select-one').attr("checked",true);
+            $('.select-one').prop("checked",true);
         } else{
-            $('.select-one').attr("checked",false);
+            $('.select-one').prop("checked",false);
         }
     })
 } );
