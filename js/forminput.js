@@ -5,15 +5,7 @@ $(document).ready(function() {
             targets: [0,4]
         }]
     });
-
-    $('#edit').click( function() {
-        let data = table.$('input, select').serialize();
-        alert(
-            "The following data would have been submitted to the server: \n\n"+
-            data.substr( 0, 120 )+'...'
-        );
-        return false;
-    } );
+    document.getElementById("example").classList.remove("invisible");
 
     $('.delete').click( function() {
         $(this).closest("tr").remove();
@@ -23,11 +15,22 @@ $(document).ready(function() {
         $("input:checked").closest("tr").remove();
     })
 
+    $('.select-one').click(function() {
+        checked_cnt = $('input:checked').length;
+        if(checked_cnt > 1){
+            document.getElementsByClassName("delete-multi")[0].classList.remove("invisible");
+        } else {
+            document.getElementsByClassName("delete-multi")[0].classList.add("invisible");
+        }
+    })
+
     $('#select-all').click(function(){
         if($('#select-all').is(":checked")){
             $('.select-one').prop("checked",true);
+            document.getElementsByClassName("delete-multi")[0].classList.remove("invisible");
         } else{
             $('.select-one').prop("checked",false);
+            document.getElementsByClassName("delete-multi")[0].classList.add("invisible");
         }
     })
 } );

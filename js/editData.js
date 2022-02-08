@@ -21,5 +21,7 @@ function editData(e){
         }
     ).then((response) => {
         console.log(response);
+        window.location.reload();
+        // $('#example').load(" #example");
     });
 }

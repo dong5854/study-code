@@ -1,6 +1,6 @@
 <?php include __DIR__."/viewDatabase.php"; ?>
-<button type="submit" class="delete-multi">delete-multi</button>
-    <table id="example" class="display" style="width:100%">
+<button type="submit" class="delete-multi invisible">delete-multi</button>
+    <table id="example" class="display invisible" style="width:100%;">
         <thead>
             <tr>
                 <th>select<input type="checkbox" id="select-all"></th>

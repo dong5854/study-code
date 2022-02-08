@@ -17,6 +17,8 @@ function deleteData(e){
         }
     ).then((response) => {
         console.log(response);
+        window.location.reload();
+        // $('#example').load(" #example");
     });
 }
 
@@ -36,5 +38,7 @@ function deleteDataMulti(e){
     }
     ).then((response) => {
         console.log(response);
+        window.location.reload();
+        // $('#example').load(" #example");
     });
 }
