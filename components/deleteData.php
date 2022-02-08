@@ -1,6 +1,6 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 $_id = $_GET['_id'];
 
 $DB = new SQLite3(__DIR__.'/../database/test.db');
