@@ -17,6 +17,7 @@
 <script>
     <?php require_once("./js/forminput.js") ?>
     <?php require_once("./js/deleteData.js") ?>
+    <?php require_once("./js/editData.js") ?>
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
