@@ -17,6 +17,9 @@ const QUERY_GET_POLL = gql`
 
 const MUTATION_VOTE = gql`
   mutation vote($optionId: uuid!, $userId: uuid!) {
+    delete_vote(where: {option: {poll: {options: {id: {_eq: $optionId}}}}, created_by_user_id: {_eq: $userId}}){
+      affected_rows
+    }
     insert_vote(
       objects: [{ option_id: $optionId, created_by_user_id: $userId }]
     ) {
