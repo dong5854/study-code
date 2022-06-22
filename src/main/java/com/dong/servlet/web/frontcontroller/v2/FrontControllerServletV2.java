@@ -1,7 +1,6 @@
 package com.dong.servlet.web.frontcontroller.v2;
 
 import com.dong.servlet.web.frontcontroller.MyView;
-import com.dong.servlet.web.frontcontroller.v2.ControllerV2;
 import com.dong.servlet.web.frontcontroller.v2.controller.MemberFormControllerV2;
 import com.dong.servlet.web.frontcontroller.v2.controller.MemberListControllerV2;
 import com.dong.servlet.web.frontcontroller.v2.controller.MemberSaveControllerV2;
