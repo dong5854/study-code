@@ -1,1 +1,3 @@
-# Today I Learned
+# study-code
+
+공부하면서 실습용으로 작성한 코드들을 모아둔 리포지토리입니다.
