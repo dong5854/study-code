@@ -1,0 +1,23 @@
+#가상환경과 패키지 ignore
+venv
+crawl
+#npm 패키지 ignore
+frontend/node_modules
+#.idea ignore
+.idea
+#builded react
+frontend/static/frontend
+#pycache
+**/__pycache__/
+api/__pycache__
+api/migrate
+api/migrations/__pycache__
+dash/__pycache__
+dash/migrations/__pycache__
+frontend/__pycache__/
+frontend/migrations/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+chromedriver
+db.sqlite3
