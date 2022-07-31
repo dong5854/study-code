@@ -1,0 +1,11 @@
+td {
+    text-align: center;
+}
+
+#example td > i {
+    display: none;
+}
+
+.invisible{
+    display: none;
+}
