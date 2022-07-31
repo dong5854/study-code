@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: redis_container
+    image: redis
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf:/etc/redis/
+    ports:
+      - 127.0.0.1:9000:6379
+    command: redis-server /etc/redis/redis.conf
