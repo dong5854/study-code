@@ -1,0 +1,120 @@
+* {
+	font-family: "Roboto Mono", monospace;
+	font-family: "Yeon Sung", cursive;
+}
+
+.hidden {
+	display: none;
+}
+
+li {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+button {
+	background: transparent;
+	border: none;
+}
+
+#clock,
+#ampm,
+#greeting,
+#login-form,
+#todo-form,
+#todo-input,
+#login-input,
+#todo-list,
+#todo-input::placeholder,
+#quote {
+	text-align: center;
+}
+
+#bg {
+	min-width: 100%;
+	min-height: 100%;
+	margin: auto;
+	overflow: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+#quote {
+	position: fixed;
+	bottom: 50px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	font-size: x-large;
+}
+
+#weather {
+	position: fixed;
+	right: 30px;
+	top: 20px;
+	font-size: larger;
+}
+
+#clock-container {
+	margin-top: 5%;
+}
+#clock,
+#ampm {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+#clock {
+	font-size: 120px;
+}
+#ampm {
+	font-size: 50px;
+}
+
+#todo-input,
+#login-input {
+	color: inherit;
+	background: transparent;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 3px solid currentColor;
+	width: 400px;
+	height: 25px;
+}
+
+#todo-input::placeholder,
+#todo-input,
+#login-input,
+#login-input::placeholder,
+#todo-list {
+	color: inherit;
+	font-size: x-large;
+}
+
+#todo-input:focus,
+#login-input:focus {
+	outline: none;
+	color: inherit;
+	background: transparent;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 3px solid currentColor;
+}
+
+#login {
+	background: transparent;
+	border: currentColor dotted;
+	color: inherit;
+	font-size: larger;
+	position: absolute;
+}
+
+#login:hover {
+	cursor: pointer;
+}
