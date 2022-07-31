@@ -1,0 +1,25 @@
+{
+    "items": [
+        {
+            "idx": 0,
+            "name": "피자",
+            "price": 8000,
+            "amount": 2,
+            "discount": 0
+        },
+        {
+            "idx": 1,
+            "name": "요구르트",
+            "price": 1000,
+            "amount": 3,
+            "discount": 0
+        },
+        {
+            "idx": 2,
+            "name": "타르트",
+            "price": 15000,
+            "amount": 5,
+            "discount": 0
+        }
+    ]
+}
