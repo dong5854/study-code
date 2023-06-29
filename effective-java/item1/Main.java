@@ -1,7 +1,9 @@
+package item1;
+
 import java.util.*;
 import java.math.*;
 
-public class Item1 {
+public class Main {
     public static void main(String[] args) {
         BigInteger bi = BigInteger.probablePrime(3, new Random());
         System.out.println(bi);
