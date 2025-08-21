@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx-resolver
+  name: nginx-resolver
+spec:
+  containers:
+  - image: nginx
+    name: nginx-resolver
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-resolver-service
+  name: nginx-resolver-service
+spec:
+  ports:
+  - name: 80-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx-resolver
+  type: ClusterIP
