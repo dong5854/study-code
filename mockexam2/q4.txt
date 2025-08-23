@@ -1,5 +1,0 @@
-controlplane ~ ➜  kubectl create deployment nginx-deploy --image nginx:1.16 --replicas 1
-deployment.apps/nginx-deploy create
-
-controlplane ~ ➜  kubectl set image deployments/nginx-deploy nginx=nginx:1.17
-deployment.apps/nginx-deploy image updatedd
