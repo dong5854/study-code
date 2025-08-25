@@ -1,0 +1,4 @@
+kubectl create priorityclass low-priority --value=50000 --namespace low-priority
+
+spec:
+  priorityClassName: low-priority

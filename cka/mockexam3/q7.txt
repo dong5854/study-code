@@ -1,0 +1,3 @@
+kubectl taint nodes node01 env_type=production:NoSchedule
+
+kubectl run pod dev-redis --image redis:alpine
