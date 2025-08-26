@@ -1,0 +1,5 @@
+ kubectl cluster-info dump | grep -n5 cidr
+
+kubectl get configmap kubeadm-config -n kube-system  -o jsonpath="{.data.ClusterConfiguration}" | grep podSubnet  | awk '{print $2}' > /root/pod-cidr.txt
+
+
