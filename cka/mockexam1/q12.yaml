@@ -1,0 +1,6 @@
+helm list -A
+helm repo list
+helm repo update kk-mock1 -n kk-ns
+helm search repo kk-mock1/nginx -n kk-ns -l
+helm upgrade kk-mock1 kk-mock1/nginx -n kk-ns --version=18.1.15
+helm ls -n kk-ns
