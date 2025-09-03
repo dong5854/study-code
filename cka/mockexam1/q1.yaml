@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mc-pod
+  name: mc-pod
+  namespace: mc-namespace
+spec:
+  containers:
+  - image: nginx:1-alpine
+    name: mc-pod-1
+    env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+  - image: busybox:1
+    name: mc-pod-2
+    command: [ "sh", "-c", "while true; do date >> /var/log/shared/date.log; sleep 1; done;"]
+    volumeMounts:
+      - name: data
+        mountPath: /var/log/shared
+  - image: busybox:1
+    name: mc-pod-3
+    command: [ "sh", "-c"]
+    args:
+      - tail -f /var/log/shared/date.log
+    volumeMounts:
+      - name: data
+        mountPath: /var/log/shared
+  volumes:
+    - name: data
+      emptyDir: {}

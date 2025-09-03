@@ -1,0 +1,1 @@
+k get customresourcedefinitions.apiextensions.k8s.io | grep verticalpodautoscaler | awk '{print $1}' > /root/vpa-crds.txt
