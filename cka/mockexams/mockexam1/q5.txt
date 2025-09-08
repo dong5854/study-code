@@ -1,0 +1,1 @@
+helm install webapp-color-apd /opt/webapp-color-apd --namespace frontend-apd

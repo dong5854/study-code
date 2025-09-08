@@ -1,0 +1,1 @@
+sudo grep -n 'kube-controller-manag' /etc/kubernetes/manifests/kube-controller-manager.yaml
