@@ -1,14 +1,5 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  creationTimestamp: "2025-09-08T11:44:23Z"
-  name: green-role-cka22-arch
-  namespace: cluster1
-  resourceVersion: "4307"
-  uid: 3e48778b-75d8-405f-bfbb-521e51fa9276
-rules:
 - apiGroups:
-  - apps
+  - "*"
   resources:
   - namespaces
   verbs:
